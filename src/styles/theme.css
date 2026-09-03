@@ -1,0 +1,1034 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Design tokens — the "case file / field guide" palette.
+   Warm parchment ground, brass accents, oxidised-wine highlight.
+   Change these and the whole site follows.
+   ========================================================================== */
+
+@theme {
+  /* Ground */
+  --color-parchment: #efe9d8;
+  --color-parchment-deep: #e5dbc1;
+  --color-parchment-light: #f6f1e3;
+
+  /* Panels */
+  --color-surface: #fdfbf5;
+  --color-surface-sunk: #ded5b6;
+  --color-surface-raised: #f8f4e8;
+
+  /* Ink */
+  --color-ink: #33291f;
+  --color-ink-soft: #5c5145;
+  --color-ink-faint: #8a7d6c;
+
+  /* Brass */
+  --color-brass: #9a7d2a;
+  --color-brass-deep: #7d6420;
+  --color-brass-soft: #c9b071;
+  --color-brass-pale: #f0e6c8;
+
+  /* Wine — for the one thing on a page that needs to shout */
+  --color-wine: #8f3b3b;
+  --color-wine-pale: #f1e3e1;
+
+  /* Lines */
+  --color-rule: #ded2b2;
+  --color-rule-soft: #e9e0c8;
+
+  --font-serif:
+    'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman',
+    serif;
+
+  --font-mono:
+    'iA Writer Mono', 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', ui-monospace, monospace;
+
+  /* Type scale. EB Garamond runs small for its point size, so the whole
+     scale sits about 15% above the Tailwind default. Turn these down
+     together if you ever want quieter type. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.15rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.4rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.65rem;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.85rem;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.95rem;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 2.15rem;
+  --text-3xl: 2.0625rem;
+  --text-3xl--line-height: 2.45rem;
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 2.8rem;
+  --text-5xl: 3.25rem;
+  --text-5xl--line-height: 1.05;
+
+  --shadow-panel: 0 1px 2px rgb(51 41 31 / 0.04), 0 8px 24px -12px rgb(51 41 31 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(51 41 31 / 0.05), 0 18px 40px -18px rgb(51 41 31 / 0.24);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    /* Decorations may hang past the column; never let them scroll the page. */
+    overflow-x: clip;
+    background-color: var(--color-parchment);
+    background-image:
+      radial-gradient(120% 80% at 50% 0%, #f6f1e3 0%, transparent 60%),
+      radial-gradient(100% 70% at 100% 100%, #e8e0c9 0%, transparent 55%);
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    /* Old-style figures + real small caps, the way a printed field guide sets them. */
+    font-variant-numeric: oldstyle-nums proportional-nums;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Paper grain. Subtle on purpose — you should feel it, not see it. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-brass-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+@layer components {
+  /* --- The bracketed panel: the signature motif ------------------------- */
+
+  .panel {
+    position: relative;
+    border: 1px solid var(--color-rule);
+    border-radius: 6px;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+  }
+
+  /* Four L-shaped corner marks, drawn as eight hairlines. */
+  .brackets::after {
+    content: '';
+    position: absolute;
+    inset: var(--bracket-inset, 0.625rem);
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-image:
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0),
+      linear-gradient(var(--bracket-color, var(--color-brass-soft)) 0 0);
+    background-size:
+      var(--bracket-len, 14px) 1px,
+      1px var(--bracket-len, 14px),
+      var(--bracket-len, 14px) 1px,
+      1px var(--bracket-len, 14px),
+      var(--bracket-len, 14px) 1px,
+      1px var(--bracket-len, 14px),
+      var(--bracket-len, 14px) 1px,
+      1px var(--bracket-len, 14px);
+    background-position:
+      left top,
+      left top,
+      right top,
+      right top,
+      left bottom,
+      left bottom,
+      right bottom,
+      right bottom;
+    transition:
+      inset 300ms cubic-bezier(0.2, 0.7, 0.3, 1),
+      background-size 300ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  /* Hovering a linked panel pulls the marks in and draws them longer —
+     the brackets close on the card like a lens finding focus. */
+  .panel.lift:hover::after {
+    --bracket-inset: 0.375rem;
+    --bracket-len: 22px;
+  }
+
+  /* --- Type ------------------------------------------------------------- */
+
+  /* Letterspaced brass label above a heading, as on FIELD GUIDE / EVIDENCE. */
+  .eyebrow {
+    font-size: 0.8 rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-brass);
+  }
+
+  .eyebrow-muted {
+    color: var(--color-ink-faint);
+  }
+
+  .display {
+    font-size: clamp(2.9rem, 8vw, 5.25rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  .prose-note {
+    font-size: 1.3125rem;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+
+  /* --- Buttons ---------------------------------------------------------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-gold {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-brass-deep);
+    color: var(--color-brass-pale);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.25) inset;
+  }
+
+  .btn-gold:hover {
+    background-color: #6b551a;
+  }
+
+  /* A slow gleam crossing the brass, once per hover. */
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg,
+        transparent 38%,
+        rgb(255 255 255 / 0.16) 50%,
+        transparent 62%);
+    translate: -130% 0;
+    transition: translate 700ms ease;
+  }
+
+  .btn-gold:hover::after {
+    translate: 130% 0;
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    border-color: var(--color-rule);
+    color: var(--color-ink-soft);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-brass-soft);
+    color: var(--color-brass-deep);
+    background-color: var(--color-parchment-light);
+  }
+
+  /* Wide understated action, as on SKIP THIS QUESTION. */
+  .btn-plate {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 4px;
+    background-color: var(--color-surface);
+    color: var(--color-ink-soft);
+    font-size: 1.0375rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .btn-plate:hover {
+    border-color: var(--color-brass-soft);
+    background-color: var(--color-parchment-light);
+    color: var(--color-brass-deep);
+  }
+
+  /* --- Wing buttons, the paired hero actions ---------------------------- */
+
+  .btn-wing {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-width: 15rem;
+    padding: 0.8125rem 1.375rem 0.8125rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      transform 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .btn-wing:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-wing:active {
+    transform: translateY(0);
+  }
+
+  /* The mark sits in its own little seal, stamped like the page glyphs. */
+  .btn-wing-seal {
+    display: grid;
+    place-items: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    flex: none;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-wing:hover .btn-wing-seal {
+    transform: rotate(-8deg) scale(1.06);
+  }
+
+  .btn-wing-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.0625rem;
+    margin-right: auto;
+  }
+
+  .btn-wing-label {
+    font-size: 1.1875rem;
+    line-height: 1.2;
+  }
+
+  .btn-wing-note {
+    font-size: var(--text-xs);
+    line-height: 1.1;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    opacity: 0.72;
+  }
+
+  .btn-wing-arrow {
+    flex: none;
+    transition:
+      transform 200ms ease,
+      opacity 200ms ease;
+    opacity: 0.75;
+  }
+
+  .btn-wing:hover .btn-wing-arrow {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+
+  .btn-wing-gold {
+    background-color: var(--color-brass-deep);
+    color: var(--color-brass-pale);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.22) inset,
+      0 10px 24px -14px rgb(51 41 31 / 0.55);
+  }
+
+  .btn-wing-gold:hover {
+    background-color: #6b551a;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.22) inset,
+      0 16px 32px -14px rgb(51 41 31 / 0.5);
+  }
+
+  .btn-wing-gold .btn-wing-seal {
+    border-color: rgb(240 230 200 / 0.45);
+    background-color: rgb(255 255 255 / 0.1);
+  }
+
+  .btn-wing-ghost {
+    background-color: var(--color-surface);
+    border-color: var(--color-rule);
+    color: var(--color-ink-soft);
+    box-shadow: 0 1px 2px rgb(51 41 31 / 0.04);
+  }
+
+  .btn-wing-ghost:hover {
+    border-color: var(--color-brass-soft);
+    background-color: var(--color-parchment-light);
+    color: var(--color-brass-deep);
+    box-shadow: 0 14px 30px -18px rgb(51 41 31 / 0.4);
+  }
+
+  .btn-wing-ghost .btn-wing-seal {
+    border-color: var(--color-rule);
+    background-color: var(--color-parchment-light);
+    color: var(--color-brass);
+  }
+
+  .btn-wing-ghost:hover .btn-wing-seal {
+    border-color: var(--color-brass-soft);
+    background-color: var(--color-surface);
+  }
+
+  /* --- Rules and ornaments ---------------------------------------------- */
+
+  .rule {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(to right,
+        transparent,
+        var(--color-rule) 12%,
+        var(--color-rule) 88%,
+        transparent);
+  }
+
+  /* Inset tan card, as on the EVIDENCE clues. */
+  .card-sunk {
+    border: 1px solid #cec4a2;
+    border-radius: 4px;
+    background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
+    padding: 1.125rem 1.25rem;
+  }
+
+  /* A listing pasted onto the page: sunk tan card, typewriter face, and its
+     own indentation kept verbatim. Inline-level, so it is legal inside a <p>;
+     `display: block` is what makes it read as a block on the page. */
+  .code-note {
+    display: block;
+    overflow-x: auto;
+    border: 1px solid #cec4a2;
+    border-radius: 4px;
+    background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
+    padding: 0.875rem 1rem;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    /* Lining figures and no ligatures — code is not running prose. */
+    font-variant-numeric: lining-nums tabular-nums;
+    font-variant-ligatures: none;
+    white-space: pre;
+    text-align: left;
+    tab-size: 4;
+  }
+
+  /* --- Ledger table, as on the tech-stack table ------------------------- */
+
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .ledger th,
+  .ledger td {
+    padding: 0.8rem 0.25rem;
+    border-bottom: 1px solid var(--color-rule-soft);
+    vertical-align: top;
+  }
+
+  .ledger tr:last-child th,
+  .ledger tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .ledger th {
+    /* Shrink to the label, leave the rest of the row to the value. */
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brass);
+    padding-top: 1.05rem;
+  }
+
+  .ledger td {
+    color: var(--color-ink-soft);
+  }
+
+  /* Phrase-length labels: let the label wrap, keep the value on one line. */
+  .ledger-wrap th {
+    width: auto;
+    white-space: normal;
+    letter-spacing: 0.07em;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    padding-right: 1rem;
+    padding-top: 0.9rem;
+    text-wrap: balance;
+  }
+
+  .ledger-wrap td {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+    padding-top: 0.9rem;
+  }
+
+  /* --- Nav -------------------------------------------------------------- */
+
+  .navlink {
+    position: relative;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-ink-faint);
+    transition: color 160ms ease;
+  }
+
+  .navlink:hover {
+    color: var(--color-brass-deep);
+  }
+
+  .navlink[aria-current='page'] {
+    color: var(--color-brass);
+  }
+
+  .navlink[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.3rem;
+    height: 1px;
+    background-color: var(--color-brass-soft);
+  }
+
+  /* Lets one link inside a card cover the whole card, without nesting
+     anchors. Anything else clickable in the card needs `relative z-2`. */
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  /* --- Hover lift, used by the linked dossier cards --------------------- */
+
+  .lift {
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--color-brass-soft);
+  }
+
+  /* --- Printed-page ornaments ------------------------------------------- */
+
+  /* A brass initial on the first paragraph of a section. */
+  .dropcap::first-letter {
+    float: left;
+    margin-top: 0.06em;
+    padding-right: 0.09em;
+    color: var(--color-brass);
+    font-size: 3.3em;
+    font-weight: 500;
+    line-height: 0.82;
+  }
+
+  /* The same initial on a pull quote, where the type is already large. */
+  .dropcap-quote::first-letter {
+    margin-top: 0.03em;
+    padding-right: 0.07em;
+    font-size: 2.4em;
+    line-height: 0.86;
+  }
+
+  /* Point form, for a panel that reads better as a list than as prose. */
+  .points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9375rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .points>li {
+    position: relative;
+    padding-left: 1.75rem;
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+
+  /* A small brass lozenge, the same mark the ornaments are cut from. */
+  .points>li::before {
+    content: '';
+    position: absolute;
+    top: 0.66em;
+    left: 0.3125rem;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    rotate: 45deg;
+    border: 1px solid var(--color-brass-soft);
+    background-color: color-mix(in srgb, var(--color-brass-soft) 40%, transparent);
+  }
+
+  /* The few words that open a point, stamped in brass ahead of the sentence. */
+  .point-lead {
+    color: var(--color-brass-deep);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  /* --- Trait rail: keywords that hold their note until pointed at -------- */
+
+  /* Two by two at every width — four tiles in a block, not a long thin rail. */
+  .trait-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem;
+  }
+
+  .trait {
+    position: relative;
+    /* One line, always: the square and the keyword sit side by side and the
+       keyword is never allowed to wrap, so every tile is the same height. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 2.875rem;
+    padding: 0.375rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 5px;
+    background-color: var(--color-surface-raised);
+    cursor: pointer;
+    transition:
+      transform 200ms ease,
+      border-color 200ms ease,
+      background-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .trait[aria-expanded='true'] {
+    transform: translateY(-2px);
+    border-color: var(--color-brass-soft);
+    background-color: var(--color-surface);
+    box-shadow: 0 12px 24px -18px rgb(51 41 31 / 0.55);
+  }
+
+  /* The brass square the glyph is stamped on — the page's lozenge, laid flat. */
+  .trait-plate {
+    display: grid;
+    place-items: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    flex: none;
+    border: 1px solid var(--color-brass-soft);
+    border-radius: 3px;
+    background-color: var(--color-brass-pale);
+    color: var(--color-brass-deep);
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .trait[aria-expanded='true'] .trait-plate {
+    background-color: var(--color-brass-deep);
+    color: var(--color-brass-pale);
+    transform: rotate(-6deg) scale(1.06);
+  }
+
+  /* Set as a small heading, in the same voice as the section titles — no
+     uppercase, no tracking, so the serif is left to do the work. */
+  .trait-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--color-ink);
+    transition: color 200ms ease;
+  }
+
+  .trait[aria-expanded='true'] .trait-label {
+    color: var(--color-brass-deep);
+  }
+
+  /* Room enough for the full-sized square and keyword. Below this the pair is
+     stepped down together rather than allowed to wrap onto a second line. */
+  @media (width >=40rem) {
+    .trait {
+      gap: 0.5rem;
+      min-height: 3.25rem;
+      padding: 0.5rem;
+    }
+
+    .trait-plate {
+      width: 1.875rem;
+      height: 1.875rem;
+    }
+
+    .trait-label {
+      font-size: 1.1875rem;
+    }
+  }
+
+  /* A lozenge caret, so the open keyword points down at its own note. */
+  .trait::after {
+    content: '';
+    position: absolute;
+    bottom: -0.3125rem;
+    left: 50%;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    translate: -50% 0;
+    rotate: 45deg;
+    border: 1px solid var(--color-brass-soft);
+    background-color: var(--color-brass-pale);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .trait[aria-expanded='true']::after {
+    opacity: 1;
+  }
+
+  /* The one plate every keyword writes into. Held at a fixed height so a note
+     arriving never shifts the page under the pointer. */
+  .trait-note {
+    display: flex;
+    align-items: center;
+    min-height: 6.25rem;
+    padding: 1.125rem 1.25rem;
+    border: 1px solid #cec4a2;
+    border-radius: 4px;
+    background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+
+  /* The empty state: an eyebrow, not a sentence, so it never reads as one of
+     the notes. The lozenge is the same mark the tiles point with. */
+  .trait-note-idle {
+    display: flex;
+    align-items: center;
+    gap: 0.6875rem;
+    font-size: 0.8375rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--color-brass);
+  }
+
+  .trait-note-idle::before {
+    content: '';
+    width: 0.4375rem;
+    height: 0.4375rem;
+    flex: none;
+    rotate: 45deg;
+    border: 1px solid var(--color-brass-soft);
+    background-color: color-mix(in srgb, var(--color-brass-soft) 40%, transparent);
+  }
+
+  .trait-note-in {
+    animation: trait-note-in 320ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+
+  /* A ruled margin, as on a page torn from a notebook. */
+  .margin-rule {
+    position: relative;
+  }
+
+  .margin-rule::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+        transparent,
+        color-mix(in srgb, var(--color-wine) 30%, transparent) 15%,
+        color-mix(in srgb, var(--color-wine) 30%, transparent) 85%,
+        transparent);
+  }
+
+  /* --- Motion ------------------------------------------------------------ */
+
+  /* Underline drawn left to right on hover, like a pen stroke. */
+  .ink-underline {
+    position: relative;
+  }
+
+  .ink-underline::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -0.25rem;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    scale: 0 1;
+    transform-origin: left center;
+    transition: scale 320ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .ink-underline:hover::after {
+    scale: 1 1;
+  }
+
+  /* Arrows step in the direction they point. */
+  .nudge svg {
+    transition: translate 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .nudge:hover svg {
+    translate: 4px 0;
+  }
+
+  .nudge-back:hover svg {
+    translate: -4px 0;
+  }
+
+  /* Glyphs answer when their card is hovered. */
+  .glyph {
+    transition: transform 340ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .lift:hover .glyph {
+    transform: translateY(-3px) scale(1.07);
+  }
+
+  /* Ambient drift for the one large glyph on a page. */
+  .glyph-float {
+    animation: glyph-float 6s ease-in-out infinite;
+  }
+
+  /* The ruling printed on the paper under a section — a stave on the Music
+     wing, graph paper on the STEM one. Faint, and dissolved at both sides so
+     it never reads as a cropped rectangle. */
+  .ruling {
+    --ruling-ink: color-mix(in srgb, var(--color-brass-soft) 55%, transparent);
+    --ruling-fade:
+      linear-gradient(to right, transparent, black 25%, black 75%, transparent),
+      linear-gradient(to bottom, black 45%, transparent);
+    mask-image: var(--ruling-fade);
+    mask-composite: intersect;
+    -webkit-mask-image: var(--ruling-fade);
+    -webkit-mask-composite: source-in;
+  }
+
+  .ruling-staff {
+    background-image: repeating-linear-gradient(to bottom,
+        var(--ruling-ink) 0 1px,
+        transparent 1px 18px);
+  }
+
+  .ruling-grid {
+    background-image:
+      repeating-linear-gradient(to bottom, var(--ruling-ink) 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(to right, var(--ruling-ink) 0 1px, transparent 1px 24px);
+  }
+
+  /* A barely-there drift for a corner ornament. The inner group carries it, so
+     the element itself stays free for the `.ornament-in` entrance. */
+  .sway>g {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sway 11s ease-in-out infinite;
+  }
+
+  /* Enters when scrolled into view. `is-visible` is added by <Reveal>. */
+  .reveal {
+    opacity: 0;
+    translate: 0 16px;
+    transition:
+      opacity 750ms cubic-bezier(0.2, 0.7, 0.3, 1),
+      translate 750ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Each page settles in when it is routed to. */
+  .page-enter {
+    animation: page-enter 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+
+  /* The engraved flourish, opening out as the page arrives. */
+  .ornament-in {
+    animation: ornament-in 800ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+    animation-delay: 180ms;
+  }
+}
+
+@keyframes glyph-float {
+
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes sway {
+
+  0%,
+  100% {
+    transform: translate(0, -1.5px) rotate(-0.8deg);
+  }
+
+  50% {
+    transform: translate(0, 1.5px) rotate(0.8deg);
+  }
+}
+
+@keyframes trait-note-in {
+  from {
+    opacity: 0;
+    translate: 0 5px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes ornament-in {
+  from {
+    opacity: 0;
+    scale: 0.75 1;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    /* Without this, a looping animation would run at 1ms per cycle. */
+    animation-iteration-count: 1 !important;
+  }
+
+  /* <Reveal> reveals immediately when motion is reduced, but belt and braces. */
+  .reveal {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

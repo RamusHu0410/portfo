@@ -626,6 +626,19 @@
     line-height: 0.86;
   }
 
+  /* A raised initial rather than a sunken one: the letter is not floated, so
+     it shares the first line's baseline and rises above it instead of having
+     the copy wrap around it. line-height 1 opens the first line just enough
+     to hold the ascender. */
+  .dropcap-raised::first-letter {
+    float: none;
+    margin-top: 0;
+    padding-right: 0.05em;
+    font-size: 2.6em;
+    line-height: 1;
+    vertical-align: baseline;
+  }
+
   /* Point form, for a panel that reads better as a list than as prose. */
   .points {
     display: flex;

@@ -8,6 +8,8 @@ type ActionProps = {
   variant?: 'gold' | 'ghost' | 'plate'
   icon?: IconName
   className?: string
+  /** Makes this a real <button> instead of a link. Ignored when `href` is set. */
+  onClick?: () => void
 }
 
 /** A call to action, in one of three weights. */
@@ -17,8 +19,23 @@ export default function Action({
   variant = 'gold',
   icon,
   className = '',
+  onClick,
 }: ActionProps) {
   const base = variant === 'plate' ? 'btn-plate' : `btn btn-${variant}`
+  const content = (
+    <>
+      {label}
+      {icon ? <Icon name={icon} size={17} /> : null}
+    </>
+  )
+
+  if (onClick && !href.trim()) {
+    return (
+      <button type="button" onClick={onClick} className={`${base} ${className}`}>
+        {content}
+      </button>
+    )
+  }
 
   return (
     <Linkable
@@ -26,8 +43,7 @@ export default function Action({
       className={`${base} ${href.trim() ? '' : 'cursor-default'} ${className}`}
       as="span"
     >
-      {label}
-      {icon ? <Icon name={icon} size={17} /> : null}
+      {content}
     </Linkable>
   )
 }

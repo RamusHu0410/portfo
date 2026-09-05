@@ -50,7 +50,7 @@ export default function IntroPage() {
         </p>
 
         <p className="prose-note mx-auto mt-8 max-w-2xl">
-          An ambitious high student with a strong foundation in software engineering, AI
+          An ambitious high school student with a strong foundation in software engineering, AI
           development, music, and collaborative leadership. Committed to excellence in musical
           performance and technical innovation, while actively seeking opportunities and constructs
           impactful projects connecting the two fields to apply my skills to real-world.

@@ -198,7 +198,7 @@ export default function StemPage() {
       </section>
 
       <div className="mt-16">
-        <PageNav prev={{ label: 'Music', href: '/music' }} next={{ label: 'Intro', href: '/' }} />
+        <PageNav prev={{ label: 'Music', href: '/music' }} next={{ label: 'Achievements', href: '/achievements' }} />
       </div>
     </Page>
   )

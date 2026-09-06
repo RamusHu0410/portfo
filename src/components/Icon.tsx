@@ -106,6 +106,8 @@ const paths = {
       <path d="m17.3 12.3 4.7-1.8m-4.4 3.7 4.6 1.8" />
     </>
   ),
+  /* A struck tick — something completed. */
+  check: <path d="m5 12.8 4.4 4.4L19 6.4" />,
   arrowRight: <path d="M4 12h16m-6-6 6 6-6 6" />,
   arrowLeft: <path d="M20 12H4m6-6-6 6 6 6" />,
 } as const

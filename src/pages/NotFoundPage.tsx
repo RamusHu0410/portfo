@@ -1,9 +1,12 @@
+import { useUnlockOnMount } from '../achievements'
 import Action from '../components/Action'
 import Page from '../components/Page'
 import Panel from '../components/Panel'
 
 /** Shown when a URL does not match any page. */
 export default function NotFoundPage() {
+  useUnlockOnMount('notFound')
+
   return (
     <Page title="Not found">
       <Panel className="flex flex-col items-center px-8 py-20 text-center">

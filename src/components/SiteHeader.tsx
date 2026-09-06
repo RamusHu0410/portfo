@@ -15,6 +15,7 @@ const NAV = [
   { label: 'Intro', href: '/' },
   { label: 'Music', href: '/music' },
   { label: 'STEM', href: '/stem' },
+  { label: 'Achievements', href: '/achievements' },
 ]
 
 /* ------------------------------------------------------------------------- */

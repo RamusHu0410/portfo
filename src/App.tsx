@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import AchievementToasts from './components/AchievementToasts'
 import SiteFooter from './components/SiteFooter'
 import SiteHeader from './components/SiteHeader'
+import { useUnlockOnMount } from './achievements'
+import AchievementsPage from './pages/AchievementsPage'
 import IntroPage from './pages/IntroPage'
 import MusicPage from './pages/MusicPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -19,9 +22,14 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  /* Simply arriving earns the first achievement. */
+  useUnlockOnMount('welcome')
+
   return (
     <div className="flex min-h-dvh flex-col">
       <ScrollToTop />
+      {/* Above the routes, so it is subscribed before any page unlocks itself. */}
+      <AchievementToasts />
       <SiteHeader />
 
       <div className="flex-1">
@@ -29,6 +37,7 @@ export default function App() {
           <Route path="/" element={<IntroPage />} />
           <Route path="/music" element={<MusicPage />} />
           <Route path="/stem" element={<StemPage />} />
+          <Route path="/achievements" element={<AchievementsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

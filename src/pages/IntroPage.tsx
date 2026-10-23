@@ -133,7 +133,7 @@ export default function IntroPage() {
 
       {/* --- Additional club leadership ------------------------------------- */}
       <Reveal as="section" aria-labelledby="clubs-heading" className="mt-10">
-        <Panel variant="clipping" className="px-7 py-6">
+        <Panel variant="sticky" className="px-7 py-6">
           {/* Collapsed by default; the native <details> handles keyboard and screen readers. */}
           <details className="group">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">

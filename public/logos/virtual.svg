@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Virtual hackathon: a laptop sending out a signal, drawn in map ink and brass. -->
+  <!-- Signal arcs -->
+  <path d="M24 14a11 11 0 0 1 16 0" stroke="#a07a2c" stroke-width="3"/>
+  <path d="M18.5 8.5a19 19 0 0 1 27 0" stroke="#a07a2c" stroke-width="3"/>
+  <circle cx="32" cy="19.5" r="2.6" fill="#a07a2c"/>
+  <!-- Screen -->
+  <rect x="13" y="26" width="38" height="24" rx="2.5" fill="#fbf6e6" stroke="#3b3026" stroke-width="3"/>
+  <!-- Code on the screen: </> -->
+  <path d="M26 33l-5 5 5 5M38 33l5 5-5 5M34.5 32l-5 12" stroke="#3b3026" stroke-width="2.6"/>
+  <!-- Base -->
+  <path d="M6 54h52l-3 4H9z" fill="#3b3026" stroke="#3b3026" stroke-width="2"/>
+</svg>

@@ -26,7 +26,7 @@ export default function Corner({ at = 'tr', className = '' }: CornerProps) {
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
-      className={`ornament-in sway pointer-events-none text-brass-soft ${className}`}
+      className={`ornament-in inlay sway pointer-events-none text-brass-soft ${className}`}
       aria-hidden="true"
     >
       {/* The outer group is the one `.sway` animates — it has no transform of

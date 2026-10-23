@@ -32,12 +32,15 @@ export default function DossierCard({
 
   return (
     <Panel
+      variant="envelope"
       as="article"
       className={`relative flex h-full flex-col items-center p-9 text-center ${
         clickable ? 'lift' : ''
       }`}
     >
-      <Icon name={icon} size={34} className="glyph text-brass" />
+      <span className="coin glyph size-16">
+        <Icon name={icon} size={30} />
+      </span>
 
       <p className="eyebrow mt-5">{eyebrow}</p>
 

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import CoffeeRing from '../components/CoffeeRing'
-import Corner from '../components/Corner'
 import EntryCard from '../components/EntryCard'
 import FeatureCard from '../components/FeatureCard'
 import Flourish from '../components/Flourish'
@@ -21,25 +20,22 @@ import Ruling from '../components/Ruling'
  *
  * Decoration: <Reveal> fades a block in on scroll (`delay` staggers a grid),
  * <Ornament label="I" /> rules off a section, and <Flourish>, <Portrait>,
- * <Corner>, <Ruling> and <CoffeeRing> are pure paper marks. Delete any freely.
+ * <Ruling> and <CoffeeRing> are pure paper marks. Delete any freely.
  */
 export default function MusicPage() {
   const [ramusodyClicks, setRamusodyClicks] = useState(0)
 
   return (
     <Page title="Music">
-      <Reveal as="header" className="relative text-center">
+      <Reveal as="header" className="drop-paper relative text-center">
+        <Panel variant="torn" className="mx-auto max-w-4xl px-6 pt-44 pb-14 sm:px-14 sm:pt-16 sm:pb-16">
+        {/* Inside the note, not behind it: a later positioned sibling paints
+            over an earlier one, which is what used to hide the drawing. */}
         <Portrait
           src="/portrait.png"
-          alt="Line drawing of Ramus Hu at a grand piano, from a photograph"
-          className="absolute -top-4 -left-2 w-32 sm:-top-10 sm:-left-10 sm:w-48"
+          alt="Ha no photo for u"
+          className="absolute top-6 left-1/2 z-10 w-28 -translate-x-1/2 sm:top-8 sm:left-8 sm:w-40 sm:translate-x-0"
         />
-
-        <Corner
-          at="tr"
-          className="absolute -top-6 -right-1 w-24 opacity-70 sm:-top-8 sm:-right-8 sm:w-32"
-        />
-
         <Flourish className="mx-auto w-32 sm:w-40" />
 
         <p className="eyebrow mt-5">Wing One</p>
@@ -47,16 +43,28 @@ export default function MusicPage() {
         <h1 className="display mt-5">Music</h1>
 
         <p className="prose-note mx-auto mt-7 max-w-2xl">
-          An experienced collaborative artist who had accompanist exams, auditions and performances.
+          An experienced collaborative pianist for exams, auditions and performances.
         </p>
+
+        {/* Same highlight list as the STEM hero, so both wings set their roles alike. */}
+        <ul className="hero-points mx-auto mt-5 max-w-2xl">
+          <li>
+            <span className="dash-mark" aria-hidden="true" />
+            First accompanist, Bur Oak Choir
+          </li>
+          <li>
+            <span className="dash-mark" aria-hidden="true" />
+            Alternate pianist, Toronto Youth Symphony Orchestra
+          </li>
+        </ul>
+        </Panel>
       </Reveal>
 
       {/* --- Statement ------------------------------------------------------- */}
-      <Reveal className="mt-14">
+      <Reveal className="mt-10">
         <FeatureCard
           icon="quill"
-          dropcap
-          size="md"
+          compact
           cite="Ms. Lee, choir director — Music Award Ceremony, 2026"
           action={{
             label: 'Spring Ramusody!!!',
@@ -68,7 +76,7 @@ export default function MusicPage() {
               aria-live="polite"
               className="rounded-full border border-rule px-3.5 py-1 text-[0.8rem] tracking-[0.14em] text-ink-faint uppercase"
             >
-              {ramusodyClicks === 1 ? '×' : '×'} {ramusodyClicks}
+              × {ramusodyClicks}
             </span>
           }
         >
@@ -84,37 +92,44 @@ export default function MusicPage() {
         <Ruling variant="staff" className="absolute -top-8 -right-10 -left-10 -z-10 h-[73px]" />
         <CoffeeRing className="absolute top-40 -right-24 -z-10 w-56 sm:-right-32 sm:w-72" />
 
-        <h2 id="entries-heading" className="eyebrow mb-8 text-center">
+        <h2 id="entries-heading" className="eyebrow ribbon mb-10 text-center">
           Selected Work
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Reveal delay={120} className="h-full">
+        {/* Featured: the one recording with a still, full width, image beside text. */}
+        <Reveal className="mb-6">
+          <EntryCard
+            wide
+            title="Chopin — Polonaise in A-flat major, Op. 53"
+            meta="Dec 2025"
+            href="https://youtu.be/3vIi7mJCrao"
+            action={{ label: 'Listen', href: 'https://youtu.be/3vIi7mJCrao' }}
+            image={{
+              src: '/recordings/polonaise-op53.jpg',
+              play: true,
+              alt: 'Ramus playing a Steinway grand on a dark stage at the 2025 Winter Concert',
+            }}
+          >
+            Maestro!! The “Heroic” Polonaise at the 2025 Winter Concert.
+          </EntryCard>
+        </Reveal>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <Reveal className="h-full">
             <EntryCard
-              title="Selection of Chopin Piano Concerto 1 in E minor, Op. 11"
-              meta="mar 2026"
+              title="Chopin — Piano Concerto No. 1 in E minor, Op. 11 (selection)"
+              meta="Mar 2026"
               href="https://www.instagram.com/p/DVXSPL2iE-6/"
               action={{ label: 'Listen', href: 'https://www.instagram.com/p/DVXSPL2iE-6/' }}
             >
-              Recording of Chopin most beautiful Melody on his 216th anniversary.
-            </EntryCard>
-          </Reveal>
-
-          <Reveal className="h-full">
-            <EntryCard
-              title="Chopin — Polonaise in A-flat major, Op. 53"
-              meta="Dec 2025"
-              href="https://youtu.be/3vIi7mJCrao"
-              action={{ label: 'Listen', href: 'https://youtu.be/3vIi7mJCrao' }}
-            >
-              Maestro!! Heroic Polonaise at 2025 Winter Concert.
+              Chopin’s most beautiful melody, recorded on his 216th birthday.
             </EntryCard>
           </Reveal>
 
           <Reveal delay={120} className="h-full">
             <EntryCard
               title="Chopin — Ballade No. 3 in A-flat major, Op. 47"
-              meta="Jun Dec 2025"
+              meta="Jun – Dec 2025"
               href="https://youtu.be/Gtq1ZB71_vI"
               action={{ label: 'Listen', href: 'https://youtu.be/Gtq1ZB71_vI' }}
             >
@@ -122,14 +137,14 @@ export default function MusicPage() {
             </EntryCard>
           </Reveal>
 
-          <Reveal className="h-full">
+          <Reveal delay={240} className="h-full">
             <EntryCard
               title="Chopin — Étude Op. 10 No. 12, “Revolutionary”"
               meta="Sep 2025"
               href="https://youtu.be/OgJFlb6_IMY"
               action={{ label: 'Listen', href: 'https://youtu.be/OgJFlb6_IMY' }}
             >
-              Inspired after the 2025 V-day Military Parade
+              Inspired by the 2025 V-Day military parade.
             </EntryCard>
           </Reveal>
         </div>
@@ -137,8 +152,12 @@ export default function MusicPage() {
 
       {/* --- Accompanist / contact --------------------------------------------- */}
       <Reveal className="mt-16">
-        <Panel className="p-9">
-          <h2 className="eyebrow">Accompanist Available</h2>
+        {/* Same ledger type as the STEM Tech Stack panel: labels .825rem/.16em, values 1.14rem. */}
+        <Panel
+          variant="index"
+          className="p-9 [&_.ledger_td]:text-[1.14rem] [&_.ledger_td]:text-ink [&_.ledger_th]:text-[0.825rem] [&_.ledger_th]:tracking-[0.16em]"
+        >
+          <h2 className="eyebrow">Accompanist available</h2>
           <hr className="rule mt-6 mb-2" />
 
           <Ledger>

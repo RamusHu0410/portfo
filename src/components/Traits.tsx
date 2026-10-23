@@ -85,7 +85,7 @@ export default function Traits({
             <span className="point-lead">{shown.props.label}</span> {shown.props.children}
           </p>
         ) : (
-          <p className="trait-note-idle">Hover a keyword</p>
+          <p className="trait-note-idle">Hover or tap a keyword</p>
         )}
       </div>
     </div>

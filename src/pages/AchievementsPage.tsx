@@ -13,14 +13,10 @@ import Reveal from '../components/Reveal'
 /** One card in the case. Locked cards keep both the glyph and the how-to sealed. */
 function AchievementCard({ achievement, unlocked }: { achievement: Achievement; unlocked: boolean }) {
   return (
-    <Panel className="flex h-full items-start gap-5 p-7">
+    <Panel variant="sticky" className="flex h-full items-start gap-5 p-7">
       <span aria-hidden="true" className="relative shrink-0">
         <span
-          className={`flex size-14 items-center justify-center rounded-full border ${
-            unlocked
-              ? 'border-brass-soft bg-brass-pale text-brass-deep'
-              : 'border-rule border-dashed bg-surface-sunk/30 text-ink-faint'
-          }`}
+          className={`coin size-14 ${unlocked ? '' : 'coin-sunk'}`}
         >
           {unlocked ? (
             <Icon name={achievement.icon} size={26} />
@@ -30,7 +26,7 @@ function AchievementCard({ achievement, unlocked }: { achievement: Achievement; 
         </span>
 
         {unlocked && (
-          <span className="absolute -right-1 -bottom-1 flex size-6 items-center justify-center rounded-full border border-brass-soft bg-brass text-parchment-light">
+          <span className="absolute -right-1 -bottom-1 flex size-6 items-center justify-center rounded-full border border-brass-soft bg-brass text-parchment-light shadow-1">
             <Icon name="check" size={13} strokeWidth={2.6} />
           </span>
         )}
@@ -72,7 +68,7 @@ function ClearAchievements({ earned }: { earned: number }) {
   if (earned === 0) return null
 
   return (
-    <Panel className="mt-12 flex flex-col items-center gap-4 px-8 py-8 text-center">
+    <Panel variant="index" className="mt-12 flex flex-col items-center gap-4 px-8 py-8 text-center">
       <h2 className="eyebrow">Clear achievements</h2>
 
       <p className="prose-note max-w-md">
@@ -107,7 +103,8 @@ export default function AchievementsPage() {
 
   return (
     <Page title="Achievements">
-      <Reveal as="header" className="text-center">
+      <Reveal as="header" className="drop-paper text-center">
+        <Panel variant="torn" className="mx-auto max-w-4xl px-6 py-14 sm:px-14 sm:py-16">
         <Flourish className="mx-auto w-32 sm:w-40" />
 
         <p className="eyebrow mt-5">The Case</p>
@@ -117,6 +114,7 @@ export default function AchievementsPage() {
         <p className="prose-note mx-auto mt-7 max-w-2xl">
           Small things found while wandering the file. {earned} of {ACHIEVEMENTS.length} unlocked.
         </p>
+        </Panel>
       </Reveal>
 
       <Ornament label="I" className="my-16" />

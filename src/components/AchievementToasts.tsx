@@ -56,7 +56,7 @@ export default function AchievementToasts() {
         >
           <span
             aria-hidden="true"
-            className="flex size-11 shrink-0 items-center justify-center rounded-full border border-brass-soft bg-brass-pale text-brass-deep"
+            className="coin size-11"
           >
             <Icon name={achievement.icon} size={22} />
           </span>

@@ -7,7 +7,7 @@ export default function CoffeeRing({ className = '' }: { className?: string }) {
     <svg
       viewBox="0 0 200 200"
       fill="none"
-      className={`pointer-events-none text-[#a98d54] ${className}`}
+      className={`pointer-events-none text-[#968667] ${className}`}
       aria-hidden="true"
     >
       <circle

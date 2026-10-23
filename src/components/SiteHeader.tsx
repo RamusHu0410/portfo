@@ -22,11 +22,11 @@ const NAV = [
 
 export default function SiteHeader() {
   return (
-    <header className="relative z-10 border-b border-rule-soft/80">
+    <header className="relative z-10 border-b border-rule bg-parchment-light/80 shadow-2">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-6">
         <Linkable
           href={WORDMARK_HREF}
-          className="text-[1.075rem] font-semibold tracking-[0.3em] text-ink uppercase"
+          className="text-[1.075rem] font-medium tracking-[0.3em] text-ink uppercase"
           linkedClassName="transition-colors hover:text-brass-deep"
         >
           {WORDMARK}

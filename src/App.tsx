@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import AchievementToasts from './components/AchievementToasts'
+import Dust from './components/Dust'
+import InkPress from './components/InkPress'
 import SiteFooter from './components/SiteFooter'
 import SiteHeader from './components/SiteHeader'
 import { useUnlockOnMount } from './achievements'
@@ -28,6 +30,8 @@ export default function App() {
   return (
     <div className="flex min-h-dvh flex-col">
       <ScrollToTop />
+      <InkPress />
+      <Dust />
       {/* Above the routes, so it is subscribed before any page unlocks itself. */}
       <AchievementToasts />
       <SiteHeader />

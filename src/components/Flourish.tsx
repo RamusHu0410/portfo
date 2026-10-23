@@ -15,7 +15,7 @@ export default function Flourish({ className = '' }: { className?: string }) {
       stroke="currentColor"
       strokeWidth="1"
       strokeLinecap="round"
-      className={`ornament-in text-brass-soft ${className}`}
+      className={`ornament-in inlay text-brass-soft ${className}`}
       aria-hidden="true"
     >
       <defs>

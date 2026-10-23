@@ -1,6 +1,5 @@
 import Action from '../components/Action'
 import CoffeeRing from '../components/CoffeeRing'
-import Corner from '../components/Corner'
 import DossierCard from '../components/DossierCard'
 import Flourish from '../components/Flourish'
 import Ledger, { LedgerRow } from '../components/Ledger'
@@ -22,23 +21,15 @@ import WingAction from '../components/WingAction'
  *   'https://…'         external, new tab
  *
  * Decoration: <Reveal> fades a block in on scroll (`delay` staggers a grid),
- * <Ornament label="I" /> rules off a section, and <Flourish>, <Corner> and
+ * <Ornament label="I" /> rules off a section, and <Flourish> and
  * <CoffeeRing> are pure paper marks. Delete any of them freely.
  */
 export default function IntroPage() {
   return (
     <Page title="Intro">
       {/* --- Hero ---------------------------------------------------------- */}
-      <Reveal as="section" className="relative text-center">
-        <Corner
-          at="tr"
-          className="absolute -top-6 -right-1 w-24 opacity-70 sm:-top-8 sm:-right-8 sm:w-32"
-        />
-        <Corner
-          at="tl"
-          className="absolute -top-6 -left-1 w-24 opacity-70 sm:-top-8 sm:-left-8 sm:w-32"
-        />
-
+      <Reveal as="section" className="drop-paper relative text-center">
+        <Panel variant="torn" className="mx-auto max-w-4xl px-6 py-14 sm:px-14 sm:py-16">
         <Flourish className="mx-auto w-32 sm:w-40" />
 
         {/*<p className="eyebrow mt-5">Bur Oak SS, Junoir Student</p>*/}
@@ -50,10 +41,9 @@ export default function IntroPage() {
         </p>
 
         <p className="prose-note mx-auto mt-8 max-w-2xl">
-          An ambitious high school student with a strong foundation in software engineering, AI
-          development, music, and collaborative leadership. Committed to excellence in musical
-          performance and technical innovation, while actively seeking opportunities and constructs
-          impactful projects connecting the two fields to apply my skills to real-world.
+          A high school junoir student with strong sense of initiave and responsibility.
+          <br />
+          Excelling in music and computer science while exploring the intersections between the two fields.
         </p>
 
         <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
@@ -72,6 +62,7 @@ export default function IntroPage() {
             variant="ghost"
           />
         </div>
+        </Panel>
       </Reveal>
 
       <Ornament label="I" className="my-16" />
@@ -81,7 +72,7 @@ export default function IntroPage() {
         <CoffeeRing className="absolute -top-16 -left-24 -z-10 w-56 sm:-left-32 sm:w-72" />
 
         <Reveal className="lg:col-span-3">
-          <Panel className="h-full p-9">
+          <Panel variant="sticky" className="h-full p-9">
             <p className="eyebrow">About</p>
 
             <h2 id="about-heading" className="mt-3 text-3xl">
@@ -114,27 +105,68 @@ export default function IntroPage() {
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-2">
-          <Panel className="h-full p-9">
+          <Panel variant="index" className="h-full p-9">
             <p className="eyebrow">Achievements</p>
 
             <hr className="rule my-6" />
 
             <Ledger wrap>
+              <LedgerRow label="Hackathon team leader" value="2026" href="" />
+              <LedgerRow label="Full RCM piano ARCT diploma" value="2026" href="" />
+              <LedgerRow label="Bur Oak Music MVP award" value="2025, 2026" href="" />
+              <LedgerRow
+                label={
+                  <>
+                    Venture Tomorrow
+                    <span className="ledger-sub">President of Tech & Finance</span>
+                  </>
+                }
+                value="2025"
+                href=""
+              />
               <LedgerRow label="UW Fryer Contest — Group V, #179" value="2025" href="" />
               <LedgerRow label="UW Galois Contest — Group V, #165" value="2026" href="" />
-              <LedgerRow label="Accompanist Guild Hackathon team leader" value="2026" href="" />
-              <LedgerRow label="Full ARCT diploma" value="2026" href="" />
-              <LedgerRow label="Bur Oak Music MVP award" value="2025, 2026" href="" />
             </Ledger>
           </Panel>
         </Reveal>
       </section>
 
+      {/* --- Additional club leadership ------------------------------------- */}
+      <Reveal as="section" aria-labelledby="clubs-heading" className="mt-10">
+        <Panel variant="clipping" className="px-7 py-6">
+          {/* Collapsed by default; the native <details> handles keyboard and screen readers. */}
+          <details className="group">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+              <h2 id="clubs-heading" className="text-2xl">
+                Previous initiative and experience
+              </h2>
+              <span
+                aria-hidden="true"
+                className="text-brass-deep transition-transform duration-200 group-open:rotate-180"
+              >
+                ▾
+              </span>
+            </summary>
+
+            <hr className="rule my-4" />
+
+            <Ledger>
+              <LedgerRow label="Music Council" value="Choir Representative" />
+              <LedgerRow label="EconBizChamp" value="Treasurer" />
+              <LedgerRow label="French Club" value="Event Organizer, Treasurer, and Secretary" />
+              <LedgerRow label="Chinese Chess Club" value="Event Organizer" />
+              <LedgerRow label="Computer Programming Club" value="Former Host" />
+              <LedgerRow label="Game Development Club" value="Event Organizer" />
+            </Ledger>
+          </details>
+        </Panel>
+      </Reveal>
+
       <Ornament label="II" className="my-16" />
 
       {/* --- The two wings — the cross-links to the other pages -------------- */}
       <section aria-labelledby="wings-heading">
-        <h2 id="wings-heading" className="eyebrow mb-8 text-center">
+        <h2 id="wings-heading" className="eyebrow ribbon mb-10 text-center">
           Explore Ramus' subjects of interest
         </h2>
 
@@ -186,14 +218,14 @@ else:
 
       {/* --- Contact --------------------------------------------------------- */}
       <Reveal as="section" aria-labelledby="contact-heading">
-        <Panel className="flex flex-col items-center px-8 py-12 text-center">
+        <Panel variant="postcard" className="flex flex-col items-center px-8 py-12 text-center">
           <p className="eyebrow">Connect Ramus</p>
 
           <h2 id="contact-heading" className="mt-3 text-3xl">
             Ramus is looking forward to answer your inquiries
           </h2>
 
-          <p className="prose-note mt-4 max-w-xl">
+          <p className="prose-note mt-4 max-w-xl indent-0">
             There is no stupid question
           </p>
 
@@ -240,7 +272,7 @@ else:
 
       <div className="mt-16">
         <PageNav
-          prev={{ label: 'STEM', href: '/stem' }}
+          prev={{ label: 'Achievements', href: '/achievements' }}
           next={{ label: 'Music', href: '/music' }}
         />
       </div>

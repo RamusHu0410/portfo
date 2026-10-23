@@ -2,7 +2,7 @@ import Linkable from './Linkable'
 
 /* --- Edit the footer here ------------------------------------------------ */
 
-const NOTE = 'VIBED BY RAMUS HU. © 2024 ALL RIGHTS RESERVED.'
+const NOTE = 'VIBED BY RAMUS HU. © 2026 ALL RIGHTS RESERVED.'
 
 const LINKS = [
   { label: 'Email', href: 'mailto:ramushu0410@gmail.com' },
@@ -15,16 +15,16 @@ const LINKS = [
 
 export default function SiteFooter() {
   return (
-    <footer className="relative z-10 mt-24 border-t border-rule-soft/80">
+    <footer className="band-sunk relative z-10 mt-24 border-t border-rule-strong">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-8 gap-y-4 px-6 py-10">
-        <p className="max-w-md text-sm text-ink-faint italic">{NOTE}</p>
+        <p className="max-w-md text-sm text-ink-soft italic">{NOTE}</p>
 
         <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
           {LINKS.map((link) => (
             <li key={link.label}>
               <Linkable
                 href={link.href}
-                className="text-xs tracking-[0.18em] text-ink-faint uppercase"
+                className="text-xs tracking-[0.18em] text-ink-soft uppercase"
                 linkedClassName="ink-underline transition-colors hover:text-brass-deep"
               >
                 {link.label}

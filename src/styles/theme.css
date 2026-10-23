@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    Design tokens — the "case file / field guide" palette.
-   Warm parchment ground, brass accents, oxidised-wine highlight.
+   Warm light-yellow parchment ground, brass accents, oxidised-wine highlight.
    Change these and the whole site follows.
    ========================================================================== */
 
@@ -12,29 +12,39 @@
   --color-parchment-deep: #e5dbc1;
   --color-parchment-light: #f6f1e3;
 
-  /* Panels */
-  --color-surface: #fdfbf5;
-  --color-surface-sunk: #ded5b6;
-  --color-surface-raised: #f8f4e8;
+  /* Panels. These and the accent/lines/faces below make up the "palette";
+     alternatives are defined under `:root[data-palette=…]` further down. */
+  --color-surface: #fcfcfa;
+  --color-surface-sunk: #dddcd7;
+  --color-surface-raised: #f5f5f2;
 
   /* Ink */
   --color-ink: #33291f;
   --color-ink-soft: #5c5145;
-  --color-ink-faint: #8a7d6c;
+  /* Held at 4.5:1 or better on the ground and on every panel face. */
+  --color-ink-faint: #6f6454;
 
-  /* Brass */
-  --color-brass: #9a7d2a;
-  --color-brass-deep: #7d6420;
-  --color-brass-soft: #c9b071;
-  --color-brass-pale: #f0e6c8;
+  /* Accent (named brass). Used for small text, so `brass` is held at 4.5:1 or
+     better on the ground and the panel faces. */
+  --color-brass: #55554f;
+  --color-brass-deep: #474743;
+  --color-brass-darker: #3a3a37;
+  --color-brass-soft: #b9b8b3;
+  --color-brass-pale: #ecebe7;
+
+  /* Graphite — aliases of the accent, kept for the decoration rules. */
+  --color-graphite: var(--color-brass-deep);
+  --color-graphite-soft: var(--color-brass-soft);
+  --color-graphite-pale: var(--color-brass-pale);
 
   /* Wine — for the one thing on a page that needs to shout */
-  --color-wine: #8f3b3b;
+  --color-wine: #7a5050;
   --color-wine-pale: #f1e3e1;
 
   /* Lines */
-  --color-rule: #ded2b2;
-  --color-rule-soft: #e9e0c8;
+  --color-rule: #dcdbd5;
+  --color-rule-soft: #e8e7e3;
+  --color-rule-strong: #c9c8c2;
 
   --font-serif:
     'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman',
@@ -65,8 +75,51 @@
   --text-5xl: 3.25rem;
   --text-5xl--line-height: 1.05;
 
-  --shadow-panel: 0 1px 2px rgb(51 41 31 / 0.04), 0 8px 24px -12px rgb(51 41 31 / 0.14);
-  --shadow-lift: 0 2px 4px rgb(51 41 31 / 0.05), 0 18px 40px -18px rgb(51 41 31 / 0.24);
+  /* Elevation, five steps (§6.2.1). Light comes from directly above, so every
+     shadow is vertical-only and positive. Each is two-part (§6.3): a tight
+     contact shadow that fades as the step rises (§6.3.1), plus a larger soft
+     one that grows. The ink is the warm brown of the text, not black.
+       1 buttons at rest      2 cards and panels     3 raised / open tiles
+       4 hovered cards        5 toasts and anything floating over the page */
+  --shadow-1: 0 1px 1px rgb(51 41 31 / 0.16), 0 1px 3px rgb(51 41 31 / 0.08);
+  --shadow-2: 0 1px 2px rgb(51 41 31 / 0.12), 0 6px 14px -4px rgb(51 41 31 / 0.18);
+  --shadow-3: 0 1px 2px rgb(51 41 31 / 0.07), 0 10px 20px -5px rgb(51 41 31 / 0.22);
+  --shadow-4: 0 2px 3px rgb(51 41 31 / 0.04), 0 18px 34px -10px rgb(51 41 31 / 0.3);
+  --shadow-5: 0 28px 52px -14px rgb(51 41 31 / 0.4);
+
+  /* Wells (§6.1.3): shadow at the top, a light lip along the bottom. */
+  --shadow-inset: inset 0 2px 4px rgb(51 41 31 / 0.14), inset 0 -1px 0 var(--edge-paper);
+
+  /* Hand-picked top edges (§6.1.2), one per face. Never white at low opacity. */
+  --edge-paper: #ffffff;
+  --edge-brass: #6a6a66;
+
+  /* Solid undersides (§6.4.2: no blur). These give an element visible
+     thickness, like a key or a stack of cards, instead of only a haze. */
+  --under-brass: #262624;
+
+  /* Key faces: lighter at the top, where light lands, darker below. Hand-picked
+     (not white at low opacity), and every pairing keeps 4.5:1 with its text. */
+  --face-brass: linear-gradient(to bottom, #545450, #474743);
+  --face-brass-hover: linear-gradient(to bottom, #474743, #3a3a37);
+  --face-paper: linear-gradient(to bottom, #ffffff, #f0f0ec);
+  --face-paper-hover: linear-gradient(to bottom, #f6f6f3, #e7e6e2);
+  --under-paper: #c4c3bd;
+  /* The sheet that peeks out beneath a panel. */
+  --sheet-peek: #f0f0ec;
+
+  /* The hackathon map's paper, water and rivers. */
+  --map-paper: #f7f7f4;
+  --map-water: #e3e4e1;
+  --map-river: #d2d3cf;
+
+  /* A panel is a sheet with two more sheets peeking out beneath it. */
+  --shadow-panel:
+    inset 0 1px 0 var(--edge-paper), 0 3px 0 -1px var(--sheet-peek), 0 4px 0 -1px var(--color-rule),
+    0 14px 22px -10px rgb(51 41 31 / 0.24), 0 2px 3px rgb(51 41 31 / 0.08);
+  --shadow-lift:
+    inset 0 1px 0 var(--edge-paper), 0 4px 0 -1px var(--sheet-peek), 0 6px 0 -1px var(--color-brass-soft),
+    0 26px 34px -14px rgb(51 41 31 / 0.34), 0 3px 4px rgb(51 41 31 / 0.06);
 }
 
 /* ==========================================================================
@@ -74,8 +127,128 @@
    ========================================================================== */
 
 @layer base {
+  /* --- Palettes ----------------------------------------------------------
+     The default (graphite, a neutral grey) lives in @theme above. Each block
+     below swaps the same tokens; set one with <html data-palette="slate">.
+     In dev, a switcher in the corner flips between them (see main.tsx). */
+
+  /* Slate: a cool blue-grey. */
+  :root[data-palette='slate'] {
+    --color-surface: #fbfcfd;
+    --color-surface-sunk: #d8dde3;
+    --color-surface-raised: #f3f5f7;
+    --color-brass: #4b5563;
+    --color-brass-deep: #3e4754;
+    --color-brass-darker: #323a45;
+    --color-brass-soft: #b3bcc7;
+    --color-brass-pale: #e8ecf1;
+    --color-rule: #d6dce3;
+    --color-rule-soft: #e5e9ee;
+    --color-rule-strong: #c3cbd5;
+    --edge-brass: #64707f;
+    --under-brass: #20262e;
+    --face-brass: linear-gradient(to bottom, #4e5866, #3e4754);
+    --face-brass-hover: linear-gradient(to bottom, #3e4754, #323a45);
+    --face-paper: linear-gradient(to bottom, #ffffff, #eef1f4);
+    --face-paper-hover: linear-gradient(to bottom, #f4f6f8, #e4e8ed);
+    --under-paper: #bcc5cf;
+    --sheet-peek: #eef1f4;
+    --map-paper: #f5f7f9;
+    --map-water: #dfe5ec;
+    --map-river: #cfd7e0;
+  }
+
+  /* Sage: a muted green-grey. */
+  :root[data-palette='sage'] {
+    --color-surface: #fbfcfa;
+    --color-surface-sunk: #d9ddd3;
+    --color-surface-raised: #f3f5f0;
+    --color-brass: #4d5a48;
+    --color-brass-deep: #414c3d;
+    --color-brass-darker: #353f32;
+    --color-brass-soft: #b4bdae;
+    --color-brass-pale: #e8ece4;
+    --color-rule: #d7dcd1;
+    --color-rule-soft: #e5e9e1;
+    --color-rule-strong: #c4cbbd;
+    --edge-brass: #67735f;
+    --under-brass: #222820;
+    --face-brass: linear-gradient(to bottom, #505d4b, #414c3d);
+    --face-brass-hover: linear-gradient(to bottom, #414c3d, #353f32);
+    --face-paper: linear-gradient(to bottom, #ffffff, #eef1eb);
+    --face-paper-hover: linear-gradient(to bottom, #f4f6f1, #e4e8df);
+    --under-paper: #bdc5b6;
+    --sheet-peek: #eef1eb;
+    --map-paper: #f5f7f3;
+    --map-water: #dfe5dc;
+    --map-river: #cfd8cb;
+  }
+
+  /* Stone: a warm grey, halfway back toward paper. */
+  :root[data-palette='stone'] {
+    --color-surface: #fcfbfa;
+    --color-surface-sunk: #ddd9d3;
+    --color-surface-raised: #f6f4f1;
+    --color-brass: #5c554c;
+    --color-brass-deep: #4d473f;
+    --color-brass-darker: #403b34;
+    --color-brass-soft: #bdb6ad;
+    --color-brass-pale: #ece8e3;
+    --color-rule: #dcd7d0;
+    --color-rule-soft: #e8e4df;
+    --color-rule-strong: #cac3ba;
+    --edge-brass: #756d63;
+    --under-brass: #29251f;
+    --face-brass: linear-gradient(to bottom, #5c554c, #4d473f);
+    --face-brass-hover: linear-gradient(to bottom, #4d473f, #403b34);
+    --face-paper: linear-gradient(to bottom, #ffffff, #f1eeea);
+    --face-paper-hover: linear-gradient(to bottom, #f7f5f2, #e8e4de);
+    --under-paper: #c6bfb5;
+    --sheet-peek: #f1eeea;
+    --map-paper: #f8f6f3;
+    --map-water: #e5e1db;
+    --map-river: #d4cec6;
+  }
+
+  /* Brass: the original yellow parchment and brass, for comparison. */
+  :root[data-palette='brass'] {
+    --color-surface: #fdfbf5;
+    --color-surface-sunk: #ded5b6;
+    --color-surface-raised: #f8f4e8;
+    --color-brass: #6a5b35;
+    --color-brass-deep: #594d2c;
+    --color-brass-darker: #4b4125;
+    --color-brass-soft: #b5a785;
+    --color-brass-pale: #f0e6c8;
+    --color-rule: #ded2b2;
+    --color-rule-soft: #e9e0c8;
+    --color-rule-strong: #cec4a2;
+    --edge-paper: #fffffb;
+    --edge-brass: #7f724e;
+    --under-brass: #322b19;
+    --face-brass: linear-gradient(to bottom, #665936, #594d2c);
+    --face-brass-hover: linear-gradient(to bottom, #574a2b, #4b4125);
+    --face-paper: linear-gradient(to bottom, #fffffb, #f4efdf);
+    --face-paper-hover: linear-gradient(to bottom, #f9f5e8, #ece5d0);
+    --under-paper: #cdc19c;
+    --sheet-peek: #f4efdf;
+    --map-paper: #fbf6e6;
+    --map-water: #e2e0c9;
+    --map-river: #cfcdb3;
+  }
+
   :root {
     color-scheme: light;
+
+    /* Aged-paper textures, generated in SVG so nothing extra is downloaded.
+       relief: the uneven, unpressed surface of rag paper, lit from above.
+       foxing: the brown age spots old paper collects.
+       grain:  fine tooth, laid over every holder so no surface reads as plastic. */
+    --paper-relief: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='r' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23ffffff' surfaceScale='2.4' diffuseConstant='1.1'%3E%3CfeDistantLight azimuth='225' elevation='66'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23r)'/%3E%3C/svg%3E");
+    --paper-foxing: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='4' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.45  0 0 0 0 0.22  0 0 0 7 -4'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23f)' opacity='0.24'/%3E%3C/svg%3E");
+    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.08'/%3E%3C/svg%3E");
+    --tear-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='14' preserveAspectRatio='none'%3E%3Cpath d='M0 14V7L9 10L18 6L25 10L36 5L42 10L50 5L56 3L66 9L75 5L85 3L95 4L101 3L108 6L118 3L127 8L136 6L146 6L157 7L166 3L177 4L186 7L195 4L206 7L214 6L224 7L230 4L240 7V14Z'/%3E%3C/svg%3E");
+    --tear-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='14' preserveAspectRatio='none'%3E%3Cpath d='M0 0V7L9 4L18 8L25 4L36 9L42 4L50 9L56 11L66 5L75 9L85 11L95 10L101 11L108 8L118 11L127 6L136 8L146 8L157 7L166 11L177 10L186 7L195 10L206 7L214 8L224 7L230 10L240 7V0Z'/%3E%3C/svg%3E");
   }
 
   html {
@@ -87,11 +260,16 @@
     min-height: 100dvh;
     /* Decorations may hang past the column; never let them scroll the page. */
     overflow-x: clip;
+    /* Clean light paper: a soft light from the top, a very faint edge shade,
+       and the raised paper surface. No stains or age spots. */
     background-color: var(--color-parchment);
     background-image:
-      radial-gradient(120% 80% at 50% 0%, #f6f1e3 0%, transparent 60%),
-      radial-gradient(100% 70% at 100% 100%, #e8e0c9 0%, transparent 55%);
-    background-attachment: fixed;
+      radial-gradient(ellipse 130% 100% at 50% 42%, transparent 60%, rgb(51 41 31 / 0.06) 100%),
+      radial-gradient(60% 40% at 50% 0%, rgb(250 244 222 / 0.6), transparent 70%),
+      var(--paper-relief);
+    background-size: auto, auto, 320px 320px;
+    background-blend-mode: normal, normal, multiply;
+    background-attachment: fixed, fixed, scroll;
     color: var(--color-ink);
     font-family: var(--font-serif);
     font-size: var(--text-base);
@@ -102,15 +280,16 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Paper grain. Subtle on purpose — you should feel it, not see it. */
+  /* Fine, neutral grain over the whole sheet (no brown fibre streaks). */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
   }
 
   ::selection {
@@ -128,7 +307,8 @@
   h2,
   h3,
   h4 {
-    font-weight: 600;
+    /* Regular weight: Garamond carries a heading by size and spacing alone. */
+    font-weight: 400;
     letter-spacing: -0.01em;
     text-wrap: balance;
   }
@@ -151,6 +331,427 @@
     border-radius: 6px;
     background-color: var(--color-surface);
     box-shadow: var(--shadow-panel);
+  }
+
+
+  /* Engraved-metal inlay for line ornaments: a hairline of light below and a
+     small soft shadow, so brass wire reads as laid into the paper. Colour and
+     stroke stay as drawn. */
+  .inlay {
+    filter: drop-shadow(0 1px 0 var(--edge-paper)) drop-shadow(0 2px 1px rgb(51 41 31 / 0.24));
+  }
+
+  /* A coin: a small round plate that carries a glyph or numeral. Raised,
+     like the keys, and with the same paper face. */
+  .coin {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    background-image: var(--face-paper);
+    color: var(--color-brass-deep);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 3px 0 var(--under-paper),
+      0 9px 12px -6px rgb(51 41 31 / 0.3);
+  }
+
+  /* The same coin pressed in, for something still sealed (§6.1.3). */
+  .coin-sunk {
+    background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
+    background-image: none;
+    border-style: dashed;
+    color: var(--color-ink-faint);
+    box-shadow: var(--shadow-inset);
+  }
+
+
+
+  /* --- Text holders ------------------------------------------------------ */
+  /* Each kind of content sits on its own kind of paper, the way a scrapbook
+     or a case file is assembled. All are the same light yellow as the page,
+     a step lighter or warmer so they lift off it. */
+
+  /* The deeper brass keeps small labels at 4.5:1 on the warmer faces. */
+  .holder-sticky,
+  .holder-envelope,
+  .ribbon {
+    --color-brass: var(--color-brass-deep);
+  }
+
+  /* Sticky note, held on with a strip of tape. */
+  .holder-sticky {
+    border: 0;
+    border-radius: 2px 2px 3px 3px;
+    background-color: var(--color-surface-raised);
+    background-image:
+      var(--paper-grain),
+      linear-gradient(135deg, transparent 86%, color-mix(in srgb, var(--color-brass) 9%, transparent)),
+      linear-gradient(
+        to bottom,
+        var(--color-surface),
+        color-mix(in srgb, var(--color-surface-raised) 70%, var(--color-brass-pale))
+      );
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper),
+      0 1px 1px rgb(51 41 31 / 0.14),
+      0 16px 16px -12px rgb(51 41 31 / 0.4);
+  }
+
+  /* Tape: translucent, with ends torn off the roll. */
+  .holder-sticky::before,
+  .holder-clipping::before,
+  .holder-clipping::after {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    width: 6.5rem;
+    height: 1.625rem;
+    pointer-events: none;
+    background-color: color-mix(in srgb, var(--color-brass-soft) 60%, transparent);
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.45), transparent 60%);
+    clip-path: polygon(
+      0 8%, 5% 0, 30% 5%, 60% 0, 95% 6%, 100% 0, 98% 50%, 100% 100%,
+      70% 94%, 40% 100%, 4% 93%, 0 100%, 2% 50%
+    );
+  }
+
+  .holder-sticky::before {
+    top: -0.8rem;
+    left: 50%;
+    translate: -50% 0;
+    rotate: -2deg;
+  }
+
+  /* Index card, pinned through the top with a brass tack. */
+  .holder-index {
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    background-color: var(--color-surface);
+    background-image:
+      var(--paper-grain),
+      linear-gradient(
+        to bottom,
+        transparent 0.9rem,
+        color-mix(in srgb, var(--color-brass) 24%, transparent) 0.9rem calc(0.9rem + 1px),
+        transparent calc(0.9rem + 1px)
+      );
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper),
+      0 1px 2px rgb(51 41 31 / 0.12),
+      0 14px 18px -12px rgb(51 41 31 / 0.34);
+  }
+
+  .holder-index::before {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    top: -0.5rem;
+    left: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    translate: -50% 0;
+    border-radius: 999px;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at 35% 30%,
+      var(--color-brass-pale) 0 12%,
+      color-mix(in srgb, var(--color-brass-soft) 45%, var(--color-brass)) 46%,
+      var(--color-brass-deep) 100%
+    );
+    box-shadow:
+      0 3px 0 -1px var(--under-brass),
+      0 7px 6px -2px rgb(51 41 31 / 0.45);
+  }
+
+  /* A page torn from an old book: ragged top and bottom edges. The shadow
+     lives on the wrapper (`.drop-paper`), because a mask also cuts away any
+     shadow drawn on the element itself. */
+  .holder-torn {
+    border: 0;
+    border-radius: 0;
+    background-color: var(--color-surface-raised);
+    background-image:
+      var(--paper-grain),
+      radial-gradient(
+        ellipse 80% 85% at 50% 45%,
+        transparent 55%,
+        color-mix(in srgb, var(--color-brass) 14%, transparent) 100%
+      );
+    box-shadow: none;
+    -webkit-mask:
+      var(--tear-top) top left / 240px 14px repeat-x,
+      linear-gradient(#000 0 0) center / 100% calc(100% - 26px) no-repeat,
+      var(--tear-bottom) bottom left / 240px 14px repeat-x;
+    mask:
+      var(--tear-top) top left / 240px 14px repeat-x,
+      linear-gradient(#000 0 0) center / 100% calc(100% - 26px) no-repeat,
+      var(--tear-bottom) bottom left / 240px 14px repeat-x;
+  }
+
+  .drop-paper {
+    filter: drop-shadow(0 1px 1px rgb(51 41 31 / 0.2)) drop-shadow(0 14px 14px rgb(51 41 31 / 0.2));
+  }
+
+  /* A press clipping, taped down at both top corners. */
+  .holder-clipping {
+    border: 0;
+    border-radius: 1px;
+    background-color: var(--color-surface-raised);
+    background-image:
+      var(--paper-grain), linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised));
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper),
+      0 1px 2px rgb(51 41 31 / 0.12),
+      0 16px 20px -14px rgb(51 41 31 / 0.36);
+  }
+
+  .holder-clipping::before {
+    top: -0.35rem;
+    left: -1.75rem;
+    rotate: -36deg;
+  }
+
+  .holder-clipping::after {
+    top: -0.35rem;
+    right: -1.75rem;
+    rotate: 36deg;
+  }
+
+  /* An envelope: the flap folds down from the top and a wax seal holds it.
+     `isolation` keeps the flap above the paper but below the words. */
+  .holder-envelope {
+    isolation: isolate;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    background-color: var(--color-surface-raised);
+    background-image:
+      var(--paper-grain), linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised));
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper),
+      0 1px 2px rgb(51 41 31 / 0.12),
+      0 16px 20px -12px rgb(51 41 31 / 0.34);
+  }
+
+  .holder-envelope::before,
+  .holder-envelope::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    left: 0;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  /* The flap's own shadow, a few pixels below it. */
+  .holder-envelope::before {
+    height: calc(4.5rem + 4px);
+    background-color: rgb(51 41 31 / 0.12);
+  }
+
+  .holder-envelope::after {
+    height: 4.5rem;
+    background-image:
+      var(--paper-grain),
+      linear-gradient(
+        to bottom,
+        var(--color-brass-pale),
+        color-mix(in srgb, var(--color-brass-pale) 75%, var(--color-brass-soft))
+      );
+  }
+
+  /* The glyph coin becomes the wax seal on the flap's tip. */
+  .holder-envelope .coin {
+    border: 0;
+    border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%;
+    /* A dark ink-brown seal rather than red wax. */
+    background-color: var(--color-brass-deep);
+    background-image: radial-gradient(
+      circle at 38% 32%,
+      color-mix(in srgb, var(--color-brass-deep) 70%, white),
+      var(--color-brass-deep) 55%,
+      var(--color-brass-darker)
+    );
+    color: var(--color-brass-pale);
+    box-shadow:
+      inset 0 0 0 4px rgb(0 0 0 / 0.18),
+      inset 0 1px 0 var(--edge-brass),
+      0 3px 0 var(--under-brass),
+      0 8px 10px -4px rgb(51 41 31 / 0.4);
+  }
+
+  /* A concert ticket: grey card stock, a notch bitten from each side, and a
+     perforated stub on the left ruled with faint staff lines. The mask also
+     cuts away box-shadows, so wrap it in `.drop-paper` for its shadow. */
+  .holder-ticket {
+    border: 0;
+    border-radius: 6px;
+    background-color: #e8e6e0;
+    background-image: var(--paper-grain), linear-gradient(to bottom, #eeece7, #e3e0d9);
+    box-shadow: none;
+    -webkit-mask:
+      radial-gradient(circle at 0 50%, #0000 0.7rem, #000 calc(0.7rem + 0.5px)) left / 51% 100%
+        no-repeat,
+      radial-gradient(circle at 100% 50%, #0000 0.7rem, #000 calc(0.7rem + 0.5px)) right / 51% 100%
+        no-repeat;
+    mask:
+      radial-gradient(circle at 0 50%, #0000 0.7rem, #000 calc(0.7rem + 0.5px)) left / 51% 100%
+        no-repeat,
+      radial-gradient(circle at 100% 50%, #0000 0.7rem, #000 calc(0.7rem + 0.5px)) right / 51% 100%
+        no-repeat;
+  }
+
+  .ticket-stub {
+    background-color: #dcd9d1;
+    background-image:
+      var(--paper-grain),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0 9px,
+        rgb(74 74 72 / 0.16) 9px 10px
+      );
+    background-position: 0 50%;
+    /* The perforation: a row of punched dashes where the stub tears off. */
+    border-bottom: 2px dashed rgb(74 74 72 / 0.3);
+  }
+
+  @media (width >= 40rem) {
+    .ticket-stub {
+      border-bottom: 0;
+      border-right: 2px dashed rgb(74 74 72 / 0.3);
+    }
+  }
+
+  /* A postcard: airmail border, a stamp and its postmark in the corner. */
+  .holder-postcard {
+    /* A quiet, single-tone airmail edge in the paper's own brass. */
+    border: 5px solid transparent;
+    border-radius: 2px;
+    border-image: repeating-linear-gradient(
+        -45deg,
+        color-mix(in srgb, var(--color-brass) 30%, transparent) 0 9px,
+        var(--color-surface-raised) 9px 18px
+      )
+      5;
+    background-color: var(--color-surface-raised);
+    background-image: var(--paper-grain);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-brass) 12%, transparent),
+      0 1px 2px rgb(51 41 31 / 0.12),
+      0 16px 22px -14px rgb(51 41 31 / 0.3);
+  }
+
+  @media (width >= 48rem) {
+    .holder-postcard::before {
+      content: '';
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 3.75rem;
+      height: 4.5rem;
+      rotate: 3deg;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 50% 46%,
+          color-mix(in srgb, var(--color-brass) 50%, transparent) 0 0.5rem,
+          transparent 0.55rem
+        ),
+        linear-gradient(var(--color-brass-pale) 0 0) center / calc(100% - 12px) calc(100% - 12px)
+          no-repeat,
+        linear-gradient(var(--color-brass-soft) 0 0);
+      /* Perforated edge: solid middle, a ring of punched holes around it. */
+      -webkit-mask:
+        linear-gradient(#000 0 0) center / calc(100% - 8px) calc(100% - 8px) no-repeat,
+        radial-gradient(circle, transparent 0 2.3px, #000 2.7px) center / 8px 8px;
+      mask:
+        linear-gradient(#000 0 0) center / calc(100% - 8px) calc(100% - 8px) no-repeat,
+        radial-gradient(circle, transparent 0 2.3px, #000 2.7px) center / 8px 8px;
+    }
+
+    .holder-postcard::after {
+      content: '';
+      position: absolute;
+      top: 2.9rem;
+      right: 3.4rem;
+      width: 4.5rem;
+      height: 4.5rem;
+      rotate: -14deg;
+      pointer-events: none;
+      border: 1.5px solid color-mix(in srgb, var(--color-brass) 30%, transparent);
+      border-radius: 999px;
+      outline: 1px solid color-mix(in srgb, var(--color-brass) 22%, transparent);
+      outline-offset: -8px;
+    }
+  }
+
+  /* A little crooked, each at its own angle, as things are when pinned by
+     hand. Small enough to stay tidy. */
+  :nth-child(4n + 1) > :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope) {
+    rotate: -0.6deg;
+  }
+
+  :nth-child(4n + 2) > :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope) {
+    rotate: 0.5deg;
+  }
+
+  :nth-child(4n + 3) > :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope) {
+    rotate: 0.35deg;
+  }
+
+  :nth-child(4n) > :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope) {
+    rotate: -0.45deg;
+  }
+
+  /* A ribbon banner for section titles, its swallowtail ends folded behind. */
+  .ribbon {
+    position: relative;
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 0.7rem 2.25rem;
+    color: var(--color-brass-deep);
+    background-color: var(--color-brass-pale);
+    background-image:
+      var(--paper-grain),
+      linear-gradient(
+        to bottom,
+        var(--color-brass-pale),
+        color-mix(in srgb, var(--color-brass-pale) 65%, var(--color-brass-soft))
+      );
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper),
+      0 2px 0 var(--color-brass-soft),
+      0 10px 14px -8px rgb(51 41 31 / 0.35);
+  }
+
+  .ribbon::before,
+  .ribbon::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0.55rem;
+    bottom: -0.55rem;
+    width: 2.25rem;
+    pointer-events: none;
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-brass-pale) 40%, var(--color-brass-soft)),
+      var(--color-brass-soft)
+    );
+  }
+
+  .ribbon::before {
+    left: -1.6rem;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 34% 50%);
+  }
+
+  .ribbon::after {
+    right: -1.6rem;
+    clip-path: polygon(0 0, 100% 0, 66% 50%, 100% 100%, 0 100%);
   }
 
   /* Four L-shaped corner marks, drawn as eight hairlines. */
@@ -203,8 +804,8 @@
 
   /* Letterspaced brass label above a heading, as on FIELD GUIDE / EVIDENCE. */
   .eyebrow {
-    font-size: 0.8 rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-brass);
@@ -216,7 +817,7 @@
 
   .display {
     font-size: clamp(2.9rem, 8vw, 5.25rem);
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.02;
     letter-spacing: -0.025em;
   }
@@ -225,6 +826,11 @@
     font-size: 1.3125rem;
     line-height: 1.5;
     color: var(--color-ink-soft);
+    /* Paragraphs read from a straight left edge; the block itself can still be
+       centred on the page with auto margins. */
+    text-align: left;
+    /* First line set in, about four spaces' worth (1em in this face). */
+    text-indent: 1em;
   }
 
   /* --- Buttons ---------------------------------------------------------- */
@@ -257,12 +863,41 @@
     position: relative;
     overflow: hidden;
     background-color: var(--color-brass-deep);
+    background-image: var(--face-brass);
     color: var(--color-brass-pale);
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.25) inset;
+    /* Set into the face like type pressed into leather, so the label belongs
+       to the key rather than floating flat above it. */
+    text-shadow: 0 -1px 0 var(--under-brass);
+    box-shadow:
+      inset 0 1px 0 var(--edge-brass), 0 4px 0 var(--under-brass),
+      0 10px 14px -4px rgb(51 41 31 / 0.4);
   }
 
   .btn-gold:hover {
-    background-color: #6b551a;
+    background-color: var(--color-brass-darker);
+    background-image: var(--face-brass-hover);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 var(--edge-brass), 0 5px 0 var(--under-brass),
+      0 14px 18px -4px rgb(51 41 31 / 0.42);
+  }
+
+  /* Pressed: the key travels down onto its own underside. */
+  .btn-gold:active {
+    transform: translateY(4px);
+    box-shadow: inset 0 1px 0 var(--edge-brass), 0 0 0 var(--under-brass);
+  }
+
+  /* Icons take the same stamping as the label beside them. */
+  .btn-gold svg,
+  .btn-wing-gold svg {
+    filter: drop-shadow(0 -1px 0 var(--under-brass));
+  }
+
+  .btn-ghost svg,
+  .btn-plate svg,
+  .btn-wing-ghost svg {
+    filter: drop-shadow(0 1px 0 var(--edge-paper));
   }
 
   /* A slow gleam crossing the brass, once per hover. */
@@ -284,15 +919,30 @@
   }
 
   .btn-ghost {
-    background-color: transparent;
+    background-color: var(--color-surface);
+    background-image: var(--face-paper);
     border-color: var(--color-rule);
     color: var(--color-ink-soft);
+    text-shadow: 0 1px 0 var(--edge-paper);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 3px 0 var(--under-paper),
+      0 8px 10px -4px rgb(51 41 31 / 0.22);
   }
 
   .btn-ghost:hover {
     border-color: var(--color-brass-soft);
     color: var(--color-brass-deep);
-    background-color: var(--color-parchment-light);
+    background-color: var(--color-surface);
+    background-image: var(--face-paper-hover);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 4px 0 var(--color-brass-soft),
+      0 12px 14px -4px rgb(51 41 31 / 0.26);
+  }
+
+  .btn-ghost:active {
+    transform: translateY(3px);
+    box-shadow: inset 0 1px 0 var(--edge-paper), 0 0 0 var(--under-paper);
   }
 
   /* Wide understated action, as on SKIP THIS QUESTION. */
@@ -303,22 +953,39 @@
     border: 1px solid var(--color-rule);
     border-radius: 4px;
     background-color: var(--color-surface);
+    background-image: var(--face-paper);
     color: var(--color-ink-soft);
+    text-shadow: 0 1px 0 var(--edge-paper);
     font-size: 1.0375rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-align: center;
     text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 3px 0 var(--under-paper),
+      0 8px 10px -4px rgb(51 41 31 / 0.2);
     transition:
       border-color 160ms ease,
       color 160ms ease,
-      background-color 160ms ease;
+      background-color 160ms ease,
+      transform 160ms ease,
+      box-shadow 160ms ease;
   }
 
   .btn-plate:hover {
     border-color: var(--color-brass-soft);
-    background-color: var(--color-parchment-light);
+    background-color: var(--color-surface);
+    background-image: var(--face-paper-hover);
     color: var(--color-brass-deep);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 4px 0 var(--color-brass-soft),
+      0 12px 14px -4px rgb(51 41 31 / 0.24);
+  }
+
+  .btn-plate:active {
+    transform: translateY(3px);
+    box-shadow: inset 0 1px 0 var(--edge-paper), 0 0 0 var(--under-paper);
   }
 
   /* --- Wing buttons, the paired hero actions ---------------------------- */
@@ -347,10 +1014,6 @@
     transform: translateY(-2px);
   }
 
-  .btn-wing:active {
-    transform: translateY(0);
-  }
-
   /* The mark sits in its own little seal, stamped like the page glyphs. */
   .btn-wing-seal {
     display: grid;
@@ -360,6 +1023,7 @@
     flex: none;
     border-radius: 999px;
     border: 1px solid currentColor;
+    box-shadow: 0 2px 0 rgb(0 0 0 / 0.22);
     transition:
       background-color 200ms ease,
       border-color 200ms ease,
@@ -406,47 +1070,74 @@
 
   .btn-wing-gold {
     background-color: var(--color-brass-deep);
+    background-image: var(--face-brass);
     color: var(--color-brass-pale);
+    text-shadow: 0 -1px 0 var(--under-brass);
     box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.22) inset,
-      0 10px 24px -14px rgb(51 41 31 / 0.55);
+      inset 0 1px 0 var(--edge-brass), 0 5px 0 var(--under-brass),
+      0 14px 20px -6px rgb(51 41 31 / 0.45);
   }
 
   .btn-wing-gold:hover {
-    background-color: #6b551a;
+    background-color: var(--color-brass-darker);
+    background-image: var(--face-brass-hover);
     box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.22) inset,
-      0 16px 32px -14px rgb(51 41 31 / 0.5);
+      inset 0 1px 0 var(--edge-brass), 0 7px 0 var(--under-brass),
+      0 20px 26px -6px rgb(51 41 31 / 0.45);
+  }
+
+  .btn-wing-gold:active {
+    transform: translateY(5px);
+    box-shadow: inset 0 1px 0 var(--edge-brass), 0 0 0 var(--under-brass);
   }
 
   .btn-wing-gold .btn-wing-seal {
-    border-color: rgb(240 230 200 / 0.45);
+    border-color: color-mix(in srgb, var(--color-brass-pale) 45%, transparent);
     background-color: rgb(255 255 255 / 0.1);
   }
 
   .btn-wing-ghost {
     background-color: var(--color-surface);
+    background-image: var(--face-paper);
     border-color: var(--color-rule);
     color: var(--color-ink-soft);
-    box-shadow: 0 1px 2px rgb(51 41 31 / 0.04);
+    text-shadow: 0 1px 0 var(--edge-paper);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 5px 0 var(--under-paper),
+      0 14px 18px -6px rgb(51 41 31 / 0.28);
   }
 
   .btn-wing-ghost:hover {
     border-color: var(--color-brass-soft);
-    background-color: var(--color-parchment-light);
+    background-color: var(--color-surface);
+    background-image: var(--face-paper-hover);
     color: var(--color-brass-deep);
-    box-shadow: 0 14px 30px -18px rgb(51 41 31 / 0.4);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 7px 0 var(--color-brass-soft),
+      0 20px 24px -6px rgb(51 41 31 / 0.3);
+  }
+
+  .btn-wing-ghost:active {
+    transform: translateY(5px);
+    box-shadow: inset 0 1px 0 var(--edge-paper), 0 0 0 var(--under-paper);
   }
 
   .btn-wing-ghost .btn-wing-seal {
     border-color: var(--color-rule);
-    background-color: var(--color-parchment-light);
+    background-color: var(--color-surface-raised);
     color: var(--color-brass);
   }
 
   .btn-wing-ghost:hover .btn-wing-seal {
     border-color: var(--color-brass-soft);
     background-color: var(--color-surface);
+  }
+
+  /* The footer is a recess below the page: darker ground, shadow at the top
+     (§6.1.3, §6.4.1), so the cards above it read as standing on the paper. */
+  .band-sunk {
+    background-color: color-mix(in srgb, var(--color-parchment-deep) 55%, transparent);
+    box-shadow: inset 0 3px 5px -2px rgb(51 41 31 / 0.14);
   }
 
   /* --- Rules and ornaments ---------------------------------------------- */
@@ -463,10 +1154,11 @@
 
   /* Inset tan card, as on the EVIDENCE clues. */
   .card-sunk {
-    border: 1px solid #cec4a2;
+    border: 1px solid var(--color-rule-strong);
     border-radius: 4px;
     background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
     padding: 1.125rem 1.25rem;
+    box-shadow: var(--shadow-inset);
   }
 
   /* A listing pasted onto the page: sunk tan card, typewriter face, and its
@@ -475,10 +1167,11 @@
   .code-note {
     display: block;
     overflow-x: auto;
-    border: 1px solid #cec4a2;
+    border: 1px solid var(--color-rule-strong);
     border-radius: 4px;
     background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
     padding: 0.875rem 1rem;
+    box-shadow: var(--shadow-inset);
     color: var(--color-ink);
     font-family: var(--font-mono);
     font-size: 0.8125rem;
@@ -516,7 +1209,7 @@
     width: 1%;
     white-space: nowrap;
     padding-right: 1.5rem;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -538,6 +1231,18 @@
     padding-right: 1rem;
     padding-top: 0.9rem;
     text-wrap: balance;
+  }
+
+  /* A second line under a label (a role under an organisation): set in
+     the reading case so it stays on one line and sits quieter. */
+  .ledger-sub {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.95rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-ink-soft);
+    white-space: nowrap;
   }
 
   .ledger-wrap td {
@@ -600,7 +1305,7 @@
   }
 
   .lift:hover {
-    transform: translateY(-3px);
+    transform: perspective(1100px) translateY(-4px) rotateX(1.5deg);
     box-shadow: var(--shadow-lift);
     border-color: var(--color-brass-soft);
   }
@@ -668,12 +1373,13 @@
     rotate: 45deg;
     border: 1px solid var(--color-brass-soft);
     background-color: color-mix(in srgb, var(--color-brass-soft) 40%, transparent);
+    box-shadow: 0 1px 0 var(--color-brass-soft);
   }
 
   /* The few words that open a point, stamped in brass ahead of the sentence. */
   .point-lead {
     color: var(--color-brass-deep);
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.01em;
   }
 
@@ -698,7 +1404,13 @@
     padding: 0.375rem;
     border: 1px solid var(--color-rule);
     border-radius: 5px;
-    background-color: var(--color-surface-raised);
+    /* Same key face as the paper buttons, so the tiles match the page's other
+       controls instead of reading as a separate, warmer colour. */
+    background-color: var(--color-surface);
+    background-image: var(--face-paper);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 3px 0 var(--under-paper),
+      0 7px 8px -4px rgb(51 41 31 / 0.2);
     cursor: pointer;
     transition:
       transform 200ms ease,
@@ -709,9 +1421,12 @@
 
   .trait[aria-expanded='true'] {
     transform: translateY(-2px);
-    border-color: var(--color-brass-soft);
+    border-color: var(--color-graphite-soft);
     background-color: var(--color-surface);
-    box-shadow: 0 12px 24px -18px rgb(51 41 31 / 0.55);
+    background-image: none;
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 5px 0 var(--color-graphite-soft),
+      0 14px 16px -6px rgb(51 41 31 / 0.3);
   }
 
   /* The brass square the glyph is stamped on — the page's lozenge, laid flat. */
@@ -721,10 +1436,11 @@
     width: 1.625rem;
     height: 1.625rem;
     flex: none;
-    border: 1px solid var(--color-brass-soft);
+    border: 1px solid var(--color-graphite-soft);
     border-radius: 3px;
-    background-color: var(--color-brass-pale);
-    color: var(--color-brass-deep);
+    background-color: var(--color-graphite-pale);
+    color: var(--color-graphite);
+    box-shadow: inset 0 1px 0 var(--edge-paper), 0 2px 0 var(--color-graphite-soft);
     transition:
       background-color 200ms ease,
       color 200ms ease,
@@ -732,8 +1448,8 @@
   }
 
   .trait[aria-expanded='true'] .trait-plate {
-    background-color: var(--color-brass-deep);
-    color: var(--color-brass-pale);
+    background-color: var(--color-graphite);
+    color: var(--color-graphite-pale);
     transform: rotate(-6deg) scale(1.06);
   }
 
@@ -750,7 +1466,7 @@
   }
 
   .trait[aria-expanded='true'] .trait-label {
-    color: var(--color-brass-deep);
+    color: var(--color-graphite);
   }
 
   /* Room enough for the full-sized square and keyword. Below this the pair is
@@ -782,8 +1498,8 @@
     height: 0.4375rem;
     translate: -50% 0;
     rotate: 45deg;
-    border: 1px solid var(--color-brass-soft);
-    background-color: var(--color-brass-pale);
+    border: 1px solid var(--color-graphite-soft);
+    background-color: var(--color-graphite-pale);
     opacity: 0;
     transition: opacity 200ms ease;
   }
@@ -799,12 +1515,13 @@
     align-items: center;
     min-height: 6.25rem;
     padding: 1.125rem 1.25rem;
-    border: 1px solid #cec4a2;
+    border: 1px solid var(--color-rule-strong);
     border-radius: 4px;
-    background-color: color-mix(in srgb, var(--color-surface-sunk) 55%, var(--color-surface));
+    background-color: color-mix(in srgb, var(--color-surface-sunk) 45%, var(--color-surface));
     font-size: 1.1875rem;
     line-height: 1.7;
     color: var(--color-ink-soft);
+    box-shadow: var(--shadow-inset);
   }
 
   /* The empty state: an eyebrow, not a sentence, so it never reads as one of
@@ -814,11 +1531,11 @@
     align-items: center;
     gap: 0.6875rem;
     font-size: 0.8375rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.2em;
     line-height: 1.2;
     text-transform: uppercase;
-    color: var(--color-brass);
+    color: var(--color-ink-faint);
   }
 
   .trait-note-idle::before {
@@ -827,8 +1544,8 @@
     height: 0.4375rem;
     flex: none;
     rotate: 45deg;
-    border: 1px solid var(--color-brass-soft);
-    background-color: color-mix(in srgb, var(--color-brass-soft) 40%, transparent);
+    border: 1px solid var(--color-graphite-soft);
+    background-color: color-mix(in srgb, var(--color-graphite-soft) 40%, transparent);
   }
 
   .trait-note-in {
@@ -966,7 +1683,8 @@
 
   /* The achievement pop-up: slides up from the corner, then back out. */
   .achievement-toast {
-    box-shadow: var(--shadow-panel);
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 var(--edge-paper), var(--shadow-5);
     animation: toast-in 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
   }
 
@@ -1061,9 +1779,1044 @@
   }
 }
 
+/* ==========================================================================
+   Motion: buttons that answer the hand, and paper things that move a little.
+   Entrances hang off <Reveal>'s `is-visible` and use `backwards` fill only,
+   so once they finish, hover transitions are free to take over.
+   ========================================================================== */
+@layer components {
+  /* --- Buttons ---------------------------------------------------------- */
+
+  .btn,
+  .btn-plate {
+    position: relative;
+  }
+
+  /* Travel with a little spring: up on hover, settling back on release. */
+  .btn,
+  .btn-plate,
+  .btn-wing,
+  .trait {
+    transition-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  /* Ink pressed into the face where the pointer lands (see <InkPress>). The
+     blot takes the button's own colour, so it reads light on brass and dark
+     on paper. */
+  .ink-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .ink-drop {
+    position: absolute;
+    border-radius: 999px;
+    background: radial-gradient(circle, currentColor 0 42%, transparent 70%);
+    opacity: 0;
+    animation: ink-spread 700ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  }
+
+  /* The flourish that pops out of a press (see <InkPress>). A zero-size
+     anchor at the pointer; every piece is centred on it and flies from there. */
+  .burst {
+    position: fixed;
+    z-index: 80;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .burst > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  /* A brass stamp ring, then a fainter echo just behind it. */
+  .burst-ring {
+    width: 84px;
+    height: 84px;
+    margin: -42px 0 0 -42px;
+    border-radius: 999px;
+    border: 2.5px solid var(--color-brass-soft);
+    box-shadow:
+      0 0 0 1px rgb(106 91 53 / 0.35),
+      0 0 0 5px color-mix(in srgb, var(--color-brass-pale) 60%, transparent),
+      inset 0 0 0 1px rgb(106 91 53 / 0.3);
+    opacity: 0;
+    animation: burst-ring 620ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  }
+
+  .burst-ring-late {
+    width: 116px;
+    height: 116px;
+    margin: -58px 0 0 -58px;
+    border-width: 1.5px;
+    border-style: dashed;
+    border-color: var(--color-brass);
+    box-shadow: none;
+    animation-duration: 820ms;
+    animation-delay: 70ms;
+  }
+
+  /* A four-point spark, like light off a brass edge. */
+  .burst-spark {
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    background: radial-gradient(circle, var(--edge-paper) 0 18%, var(--color-brass-soft) 46%, var(--color-brass) 100%);
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+    filter: drop-shadow(0 1px 1px rgb(51 41 31 / 0.25));
+    opacity: 0;
+    animation: burst-spark 520ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Ink flicked off a nib: teardrops stretched along their flight. */
+  .burst-drop {
+    width: calc(var(--size) * 2.2);
+    height: var(--size);
+    margin: calc(var(--size) / -2) 0 0 calc(var(--size) * -1.1);
+    border-radius: 999px 60% 60% 999px;
+    background-color: var(--color-ink-soft);
+    rotate: var(--angle);
+    opacity: 0;
+    animation: burst-drop 560ms cubic-bezier(0.15, 0.8, 0.3, 1) forwards;
+  }
+
+  /* Gold leaf, catching light as it turns. */
+  .burst-leaf {
+    width: 10px;
+    height: 12px;
+    margin: -6px 0 0 -5px;
+    filter: drop-shadow(0 1px 0.5px rgb(51 41 31 / 0.25));
+    background: linear-gradient(135deg, var(--color-brass-pale), var(--color-brass-soft) 55%, var(--color-brass) 100%);
+    clip-path: polygon(20% 0, 100% 15%, 85% 100%, 0 80%);
+    opacity: 0;
+    animation: burst-leaf 1150ms cubic-bezier(0.25, 0.6, 0.4, 1) var(--delay) forwards;
+  }
+
+  /* --- Hackathon map (see <HackathonMap>) ------------------------------ */
+  /* An engraved chart: paper land, ruled water, a double ruled frame. The
+     seals are real buttons laid over the drawing; their cards stay hidden
+     until hovered, focused from the keyboard, or tapped. */
+  .hack-map {
+    --pin: clamp(2rem, 5.2vw, 2.7rem);
+    position: relative;
+    padding: 4px;
+  }
+
+  .hack-map-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-rule-strong);
+    outline: 1px solid var(--color-rule);
+    outline-offset: 3px;
+    background-color: var(--map-paper);
+  }
+
+  .hm-water-fill {
+    fill: var(--map-water);
+  }
+
+  .hm-water-line {
+    stroke: rgb(106 91 53 / 0.16);
+    stroke-width: 0.6;
+  }
+
+  .hm-shore-ring {
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-rule-strong) 55%, transparent);
+    stroke-width: 7;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 3;
+  }
+
+  /* Drawn at twice the shoreline weight; the lake fill covers the inner half. */
+  .hm-shore {
+    fill: none;
+    stroke: var(--color-ink-faint);
+    stroke-width: 1.8;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 2;
+  }
+
+  .hm-lake {
+    stroke: none;
+  }
+
+  .hm-river {
+    fill: none;
+    stroke: var(--map-river);
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+  }
+
+  .hm-border {
+    fill: none;
+    stroke: rgb(111 100 84 / 0.55);
+    stroke-width: 1;
+    stroke-dasharray: 6 3 1.5 3;
+    stroke-linejoin: miter;
+  }
+
+  .hm-border-provincial {
+    stroke-width: 0.8;
+    stroke-dasharray: 4 2.5;
+  }
+
+  .hm-label {
+    font-family: var(--font-serif);
+    text-anchor: middle;
+    text-transform: uppercase;
+    paint-order: stroke;
+    stroke-linejoin: round;
+  }
+
+  .hm-label-region {
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    fill: rgb(92 81 69 / 0.72);
+    stroke: var(--map-paper);
+    stroke-width: 3;
+  }
+
+  .hm-label-water {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    fill: rgb(89 77 44 / 0.8);
+    stroke: var(--map-water);
+    stroke-width: 3;
+  }
+
+  .hm-scale text {
+    stroke: var(--map-paper);
+  }
+
+  /* Bearing cities: a dot and a small name. */
+  .hm-city circle {
+    fill: var(--color-ink-faint);
+    stroke: var(--map-paper);
+    stroke-width: 1;
+  }
+
+  .hm-city text {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    fill: var(--color-ink-soft);
+    paint-order: stroke;
+    stroke: var(--map-paper);
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+
+  .hm-rose-ring {
+    fill: none;
+    stroke: var(--color-rule-strong);
+    stroke-width: 1;
+  }
+
+  .hm-rose-n {
+    fill: var(--color-brass);
+  }
+
+  .hm-rose-arm {
+    fill: var(--color-brass-soft);
+  }
+
+  .hm-scale path {
+    fill: none;
+    stroke: var(--color-ink-faint);
+    stroke-width: 1.2;
+  }
+
+  /* A campus: the anchor sits on its spot, the seal centred over it. */
+  .hm-site {
+    position: absolute;
+    z-index: 1;
+    translate: -50% -50%;
+  }
+
+  .hm-site:hover,
+  .hm-site:has(.hm-pin:focus-visible),
+  .hm-site[data-open] {
+    z-index: 5;
+  }
+
+  .hm-pin {
+    position: relative;
+    width: var(--pin);
+    height: var(--pin);
+    padding: 0;
+    cursor: pointer;
+    transition:
+      translate 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 200ms ease,
+      color 200ms ease;
+  }
+
+  .hm-pin:hover,
+  .hm-site[data-open] .hm-pin {
+    translate: 0 -2px;
+    color: var(--color-brass);
+    box-shadow:
+      inset 0 1px 0 var(--edge-paper), 0 5px 0 var(--color-brass-soft),
+      0 14px 16px -6px rgb(51 41 31 / 0.32);
+  }
+
+  .hm-pin:focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+  }
+
+  /* The university's crest, set into the coin and toned a little towards
+     the paper so it belongs to the old map. */
+  .hm-crest {
+    width: 64%;
+    height: 64%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(0.8) sepia(0.12) drop-shadow(0 1px 0 var(--edge-paper));
+    transition: filter 200ms ease;
+  }
+
+  .hm-pin:hover .hm-crest,
+  .hm-site[data-open] .hm-crest {
+    filter: drop-shadow(0 1px 0 var(--edge-paper));
+  }
+
+  /* Each crest gives off a slow ring now and then, like a beacon. */
+  .hm-pin::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    border: 1px solid var(--color-brass-soft);
+    opacity: 0;
+    pointer-events: none;
+    animation: hm-beacon 4.2s cubic-bezier(0.2, 0.7, 0.3, 1) calc(var(--i) * 0.6s) infinite;
+  }
+
+  /* The card: hidden until asked for. */
+  .hm-tip {
+    --tx: -50%;
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.7rem);
+    width: max-content;
+    max-width: 15rem;
+    padding: 0.65rem 0.9rem 0.7rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    background-color: var(--color-surface);
+    background-image: var(--face-paper);
+    box-shadow: inset 0 1px 0 var(--edge-paper), var(--shadow-4);
+    text-align: left;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    translate: var(--tx) 6px;
+    transition:
+      opacity 180ms ease,
+      translate 260ms cubic-bezier(0.2, 0.7, 0.3, 1),
+      visibility 0s linear 260ms;
+  }
+
+  .hm-site[data-side='below'] .hm-tip {
+    top: calc(100% + 0.7rem);
+    bottom: auto;
+    translate: var(--tx) -6px;
+  }
+
+  .hm-site[data-align='start'] .hm-tip {
+    --tx: 0;
+    left: -0.5rem;
+  }
+
+  .hm-site[data-align='end'] .hm-tip {
+    --tx: 0;
+    left: auto;
+    right: -0.5rem;
+  }
+
+  .hm-site:hover .hm-tip,
+  .hm-site:has(.hm-pin:focus-visible) .hm-tip,
+  .hm-site[data-open] .hm-tip {
+    opacity: 1;
+    visibility: visible;
+    translate: var(--tx) 0;
+    transition:
+      opacity 180ms ease,
+      translate 260ms cubic-bezier(0.2, 0.7, 0.3, 1),
+      visibility 0s;
+  }
+
+  .hm-tip-uni {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-brass);
+  }
+
+  .hm-tip-event {
+    margin-top: 0.2rem;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+
+  .hm-tip-result {
+    margin-top: 0.1rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--color-brass);
+  }
+
+  .hm-tip-city {
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-faint);
+  }
+
+  /* The seals drop onto the map one after another as it comes into view. */
+  .reveal.is-visible .hm-site {
+    animation: hm-drop 560ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(280ms + var(--i) * 90ms) backwards;
+  }
+
+  /* The legend under the map. */
+  .hm-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1.6rem;
+    font-size: 0.95rem;
+    color: var(--color-ink-soft);
+  }
+
+  .hm-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .hm-credit {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-ink-faint);
+  }
+
+  .hm-credit a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule-strong);
+    text-underline-offset: 0.18em;
+  }
+
+  /* Highlight lines under a hero paragraph, each led by a .dash-mark. Same
+     face and colour as .prose-note, a step smaller so the lead sentence
+     stays the headline. */
+  .hero-points {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+
+  .hero-points li + li {
+    margin-top: 0.55rem;
+  }
+
+  /* A language name, underlined with a soft brass rule like a ledger
+     entry. Same weight as the text around it. */
+  .lang-mark {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-brass-soft);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+  }
+
+  /* A drawn dash for list lines: a tapered brass stroke, as if laid with a
+     nib, finished with a small raised lozenge. Decorative, not text. */
+  .dash-mark {
+    position: relative;
+    display: inline-block;
+    width: 1.5em;
+    height: 0.12em;
+    /* Hangs a little into the margin so the words keep the text edge. */
+    margin-left: -0.6em;
+    margin-right: 0.55em;
+    vertical-align: 0.3em;
+    border-radius: 999px;
+    /* Drawn in the text's own ink, so mark and words read as one hand. */
+    background: linear-gradient(90deg, transparent, currentColor 45%);
+  }
+
+  .dash-mark::after {
+    content: '';
+    position: absolute;
+    right: -0.2em;
+    top: 50%;
+    width: 0.36em;
+    height: 0.36em;
+    translate: 0 -50%;
+    rotate: 45deg;
+    border-radius: 1px;
+    background-color: currentColor;
+    /* A soft top-left catchlight keeps the raised look without new colour. */
+    background-image: linear-gradient(135deg, rgb(255 252 240 / 0.35), transparent 60%);
+  }
+
+  /* A printer's flower pops up out of the press and floats away. */
+  .burst-fleuron {
+    width: 40px;
+    margin: -20px 0 0 -20px;
+    font-family: var(--font-serif);
+    font-size: 28px;
+    line-height: 40px;
+    text-align: center;
+    color: var(--color-brass);
+    text-shadow:
+      0 1px 0 rgb(255 252 240 / 0.9),
+      0 2px 3px rgb(51 41 31 / 0.2);
+    opacity: 0;
+    animation: burst-fleuron 1100ms cubic-bezier(0.34, 1.4, 0.64, 1) 60ms forwards;
+  }
+
+  /* The hero's brass key catches the light every few seconds on its own. */
+  .btn-wing-gold {
+    overflow: hidden;
+  }
+
+  .btn-wing-gold::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(105deg,
+        transparent 38%,
+        rgb(255 255 255 / 0.14) 50%,
+        transparent 62%);
+    translate: -130% 0;
+    animation: gleam 7s ease-in-out 1.5s infinite;
+  }
+
+  /* Its arrow beckons, gently, until the pointer arrives. */
+  .btn-wing-gold .btn-wing-arrow {
+    animation: beckon 2.8s ease-in-out infinite;
+  }
+
+  .btn-wing-gold:hover .btn-wing-arrow {
+    animation: none;
+  }
+
+  /* The mark in each seal gives a small shake on hover. */
+  .btn-wing:hover .btn-wing-seal svg,
+  .trait:hover .trait-plate svg {
+    animation: wiggle 560ms ease both;
+  }
+
+  /* Icons on ordinary buttons hop once. */
+  .btn:hover svg {
+    animation: hop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .trait:hover:not([aria-expanded='true']) {
+    transform: translateY(-1px);
+  }
+
+  /* The focus ring draws in rather than snapping on. */
+  :focus-visible {
+    animation: focus-in 220ms ease-out;
+  }
+
+  /* --- Paper holders ---------------------------------------------------- */
+
+  /* Notes and cards rise a touch off the page under the pointer. */
+  :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope):not(.lift) {
+    transition: translate 380ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  :is(.holder-sticky, .holder-index, .holder-clipping, .holder-envelope):not(.lift):hover {
+    translate: 0 -3px;
+  }
+
+  /* Tape is slapped on as the note arrives, and lifts at one end on hover. */
+  .holder-sticky::before,
+  .holder-clipping::before,
+  .holder-clipping::after {
+    transform-origin: 20% 50%;
+    transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .holder-sticky:hover::before,
+  .holder-clipping:hover::before,
+  .holder-clipping:hover::after {
+    transform: translateY(-2px) rotate(-2.5deg) scaleY(1.06);
+  }
+
+  .reveal.is-visible :is(.holder-sticky, .holder-clipping)::before,
+  .reveal.is-visible .holder-clipping::after {
+    animation: tape-on 560ms cubic-bezier(0.2, 0.7, 0.3, 1) 320ms backwards;
+  }
+
+  /* The tack drops in and bites; hovering the card wobbles it. */
+  .reveal.is-visible .holder-index::before {
+    animation: tack-drop 560ms cubic-bezier(0.34, 1.56, 0.64, 1) 360ms backwards;
+  }
+
+  .holder-index:hover::before {
+    animation: tack-wobble 520ms ease;
+  }
+
+  /* The wax seal is pressed on, and turns a little when its envelope is
+     hovered, as if thumbed. */
+  .holder-envelope .coin {
+    transition:
+      transform 340ms cubic-bezier(0.2, 0.7, 0.3, 1),
+      rotate 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .holder-envelope:hover .coin {
+    rotate: -10deg;
+  }
+
+  .reveal.is-visible .holder-envelope .coin {
+    animation: seal-stamp 620ms cubic-bezier(0.34, 1.56, 0.64, 1) 420ms backwards;
+  }
+
+  /* The postcard's stamp straightens on hover; the postmark is struck on. */
+  .holder-postcard::before {
+    transition:
+      rotate 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      translate 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .holder-postcard:hover::before {
+    rotate: -1deg;
+    translate: 0 -2px;
+  }
+
+  .reveal.is-visible .holder-postcard::after {
+    animation: postmark-in 520ms cubic-bezier(0.2, 0.7, 0.3, 1) 600ms backwards;
+  }
+
+  /* --- Ornaments -------------------------------------------------------- */
+
+  /* Ribbon tails lift and fall, as if in a draught. */
+  .ribbon::before {
+    transform-origin: right center;
+    animation: tail-wave 5.5s ease-in-out infinite;
+  }
+
+  .ribbon::after {
+    transform-origin: left center;
+    animation: tail-wave 5.5s ease-in-out -2.75s infinite;
+  }
+
+  /* Paper dust drifting up through the light (see <Dust>). */
+  .dust {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .mote {
+    position: absolute;
+    bottom: -12px;
+    border-radius: 999px;
+    background-color: rgb(150 134 103 / 0.45);
+    box-shadow: 0 0 6px rgb(246 241 227 / 0.9);
+    opacity: 0;
+    animation-name: mote-rise;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  /* Where the browser can tie motion to scrolling, section rules draw out
+     from their numeral, the numeral turns into place, and ribbons unfurl.
+     Elsewhere they simply sit still. */
+  @supports (animation-timeline: view()) {
+    .ornament-rule {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    .ornament-rule-left {
+      transform-origin: right center;
+    }
+
+    .ornament-rule-right {
+      transform-origin: left center;
+    }
+
+    .ornament-mark {
+      animation: mark-turn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    .ribbon {
+      animation: ribbon-unfurl linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+  }
+}
+
+@keyframes ink-spread {
+  from {
+    scale: 0.04;
+    opacity: 0.3;
+  }
+
+  to {
+    scale: 1;
+    opacity: 0;
+  }
+}
+
+@keyframes hm-beacon {
+  0% {
+    scale: 1;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.9;
+  }
+
+  40%,
+  100% {
+    scale: 1.9;
+    opacity: 0;
+  }
+}
+
+@keyframes hm-drop {
+  from {
+    translate: -50% calc(-50% - 16px);
+    opacity: 0;
+  }
+
+  to {
+    translate: -50% -50%;
+    opacity: 1;
+  }
+}
+
+@keyframes burst-ring {
+  from {
+    scale: 0.15;
+    opacity: 0.95;
+  }
+
+  to {
+    scale: 1;
+    opacity: 0;
+  }
+}
+
+@keyframes burst-spark {
+  0% {
+    scale: 0;
+    rotate: 0deg;
+    opacity: 1;
+  }
+
+  45% {
+    scale: 1.15;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 0.2;
+    rotate: 90deg;
+    opacity: 0;
+  }
+}
+
+@keyframes burst-fleuron {
+  0% {
+    translate: 0 0;
+    scale: 0.2;
+    rotate: 0deg;
+    opacity: 0;
+  }
+
+  25% {
+    translate: 0 -34px;
+    scale: 1.15;
+    rotate: var(--tilt);
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    translate: 0 -64px;
+    scale: 0.9;
+    rotate: var(--tilt);
+    opacity: 0;
+  }
+}
+
+@keyframes burst-drop {
+  0% {
+    translate: 0 0;
+    scale: 0.4;
+    opacity: 0.85;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+
+  100% {
+    translate: var(--dx) var(--dy);
+    scale: 0.2 0.5;
+    opacity: 0;
+  }
+}
+
+@keyframes burst-leaf {
+  0% {
+    translate: 0 0;
+    rotate: 0deg;
+    scale: 0.3;
+    opacity: 1;
+  }
+
+  35% {
+    translate: var(--dx) var(--dy);
+    scale: 1;
+    opacity: 1;
+  }
+
+  100% {
+    translate: calc(var(--dx) * 1.35) calc(var(--dy) + var(--fall));
+    rotate: var(--spin);
+    scale: 0.8 0.3;
+    opacity: 0;
+  }
+}
+
+@keyframes gleam {
+  0% {
+    translate: -130% 0;
+  }
+
+  14%,
+  100% {
+    translate: 130% 0;
+  }
+}
+
+@keyframes beckon {
+
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+  }
+
+  70% {
+    translate: 4px 0;
+  }
+
+  80% {
+    translate: 0 0;
+  }
+
+  90% {
+    translate: 3px 0;
+  }
+}
+
+@keyframes wiggle {
+
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+
+  25% {
+    rotate: -12deg;
+  }
+
+  50% {
+    rotate: 9deg;
+  }
+
+  75% {
+    rotate: -4deg;
+  }
+}
+
+@keyframes hop {
+
+  0%,
+  100% {
+    transform: none;
+  }
+
+  45% {
+    transform: translateY(-3px) rotate(-8deg);
+  }
+}
+
+@keyframes focus-in {
+  from {
+    outline-offset: 7px;
+    outline-color: transparent;
+  }
+}
+
+@keyframes tape-on {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) rotate(-6deg) scale(1.15);
+  }
+}
+
+@keyframes tack-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(1.35);
+  }
+
+  55% {
+    opacity: 1;
+  }
+}
+
+@keyframes tack-wobble {
+
+  0%,
+  100% {
+    transform: none;
+  }
+
+  30% {
+    transform: rotate(-14deg);
+  }
+
+  60% {
+    transform: rotate(9deg);
+  }
+}
+
+@keyframes seal-stamp {
+  0% {
+    opacity: 0;
+    scale: 1.7;
+    rotate: -24deg;
+  }
+
+  60% {
+    opacity: 1;
+    scale: 0.92;
+  }
+}
+
+@keyframes postmark-in {
+  from {
+    opacity: 0;
+    scale: 1.45;
+  }
+}
+
+@keyframes tail-wave {
+
+  0%,
+  100% {
+    transform: skewY(0deg);
+  }
+
+  50% {
+    transform: skewY(-5deg);
+  }
+}
+
+@keyframes mote-rise {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.9;
+  }
+
+  50% {
+    translate: var(--drift, 0) -55vh;
+  }
+
+  88% {
+    opacity: 0.7;
+  }
+
+  100% {
+    translate: calc(var(--drift, 0px) * -0.5) -112vh;
+    opacity: 0;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    scale: 0 1;
+    opacity: 0;
+  }
+}
+
+@keyframes mark-turn {
+  from {
+    rotate: -120deg;
+    scale: 0.6;
+    opacity: 0;
+  }
+}
+
+@keyframes ribbon-unfurl {
+  from {
+    scale: 0.65 1;
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* Scroll-linked and ambient motion is dropped outright, not just sped up. */
+  .hm-site,
+  .hm-pin::after,
+  .ornament-rule,
+  .ornament-mark,
+  .ribbon,
+  .ribbon::before,
+  .ribbon::after,
+  .btn-wing-gold::after,
+  .btn-wing-gold .btn-wing-arrow {
+    animation: none !important;
+  }
+
+  .dust,
+  .burst {
+    display: none;
   }
 
   *,

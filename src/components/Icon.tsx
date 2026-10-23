@@ -108,6 +108,8 @@ const paths = {
   ),
   /* A struck tick — something completed. */
   check: <path d="m5 12.8 4.4 4.4L19 6.4" />,
+  /* A play triangle — a recording waiting to be heard. */
+  play: <path d="M8 5.5v13l10.5-6.5Z" />,
   arrowRight: <path d="M4 12h16m-6-6 6 6-6 6" />,
   arrowLeft: <path d="M20 12H4m6-6-6 6 6 6" />,
 } as const

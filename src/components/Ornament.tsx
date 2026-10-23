@@ -8,19 +8,19 @@ type OrnamentProps = {
 export default function Ornament({ label, className = '' }: OrnamentProps) {
   return (
     <div className={`flex items-center gap-4 ${className}`} aria-hidden="true">
-      <span className="h-px flex-1 bg-gradient-to-r from-transparent to-rule" />
+      <span className="ornament-rule ornament-rule-left h-px flex-1 bg-gradient-to-r from-transparent to-rule" />
 
       {label ? (
-        <span className="eyebrow shrink-0 px-1">{label}</span>
+        <span className="coin ornament-mark eyebrow h-9 min-w-9 px-2.5">{label}</span>
       ) : (
-        <svg width="34" height="10" viewBox="0 0 34 10" className="shrink-0 text-brass-soft">
+        <svg width="34" height="10" viewBox="0 0 34 10" className="inlay ornament-mark shrink-0 text-brass-soft">
           <path d="M17 1 21 5l-4 4-4-4 4-4Z" fill="none" stroke="currentColor" strokeWidth="1" />
           <circle cx="5" cy="5" r="1" fill="currentColor" />
           <circle cx="29" cy="5" r="1" fill="currentColor" />
         </svg>
       )}
 
-      <span className="h-px flex-1 bg-gradient-to-l from-transparent to-rule" />
+      <span className="ornament-rule ornament-rule-right h-px flex-1 bg-gradient-to-l from-transparent to-rule" />
     </div>
   )
 }

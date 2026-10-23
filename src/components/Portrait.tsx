@@ -30,11 +30,14 @@ export default function Portrait({ src, alt, className = '' }: PortraitProps) {
        whether this is positioned or in flow. The inner one is the frame. */
     <div className={`ornament-in aspect-square ${className}`} role="img" aria-label={alt}>
       <div className="relative h-full w-full">
+        {/* The medallion itself: a raised disc, so the drawing sits on it. */}
+        <div className="coin absolute inset-[2%] !border-0" />
+
         <svg
           viewBox="0 0 100 100"
           fill="none"
           stroke="currentColor"
-          className="absolute inset-0 text-brass-soft"
+          className="inlay absolute inset-0 text-brass-soft"
           aria-hidden="true"
         >
           <circle cx="50" cy="50" r="49" strokeWidth="0.7" />

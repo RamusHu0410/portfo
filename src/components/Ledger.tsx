@@ -20,7 +20,8 @@ export default function Ledger({ children, wrap = false }: LedgerProps) {
 }
 
 type LedgerRowProps = {
-  label: string
+  /** Usually a string; pass a node to break a long label across lines. */
+  label: ReactNode
   value: string
   /** Links the value. Leave empty for plain text. */
   href?: string

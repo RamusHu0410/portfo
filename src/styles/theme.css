@@ -14,9 +14,9 @@
 
   /* Panels. These and the accent/lines/faces below make up the "palette";
      alternatives are defined under `:root[data-palette=…]` further down. */
-  --color-surface: #fcfcfa;
-  --color-surface-sunk: #dddcd7;
-  --color-surface-raised: #f5f5f2;
+  --color-surface: #fdfbf5;
+  --color-surface-sunk: #ded5b6;
+  --color-surface-raised: #f8f4e8;
 
   /* Ink */
   --color-ink: #33291f;
@@ -26,11 +26,11 @@
 
   /* Accent (named brass). Used for small text, so `brass` is held at 4.5:1 or
      better on the ground and the panel faces. */
-  --color-brass: #55554f;
-  --color-brass-deep: #474743;
-  --color-brass-darker: #3a3a37;
-  --color-brass-soft: #b9b8b3;
-  --color-brass-pale: #ecebe7;
+  --color-brass: #6a5b35;
+  --color-brass-deep: #594d2c;
+  --color-brass-darker: #4b4125;
+  --color-brass-soft: #b5a785;
+  --color-brass-pale: #f0e6c8;
 
   /* Graphite — aliases of the accent, kept for the decoration rules. */
   --color-graphite: var(--color-brass-deep);
@@ -42,9 +42,9 @@
   --color-wine-pale: #f1e3e1;
 
   /* Lines */
-  --color-rule: #dcdbd5;
-  --color-rule-soft: #e8e7e3;
-  --color-rule-strong: #c9c8c2;
+  --color-rule: #ded2b2;
+  --color-rule-soft: #e9e0c8;
+  --color-rule-strong: #cec4a2;
 
   --font-serif:
     'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman',
@@ -91,27 +91,27 @@
   --shadow-inset: inset 0 2px 4px rgb(51 41 31 / 0.14), inset 0 -1px 0 var(--edge-paper);
 
   /* Hand-picked top edges (§6.1.2), one per face. Never white at low opacity. */
-  --edge-paper: #ffffff;
-  --edge-brass: #6a6a66;
+  --edge-paper: #fffffb;
+  --edge-brass: #7f724e;
 
   /* Solid undersides (§6.4.2: no blur). These give an element visible
      thickness, like a key or a stack of cards, instead of only a haze. */
-  --under-brass: #262624;
+  --under-brass: #322b19;
 
   /* Key faces: lighter at the top, where light lands, darker below. Hand-picked
      (not white at low opacity), and every pairing keeps 4.5:1 with its text. */
-  --face-brass: linear-gradient(to bottom, #545450, #474743);
-  --face-brass-hover: linear-gradient(to bottom, #474743, #3a3a37);
-  --face-paper: linear-gradient(to bottom, #ffffff, #f0f0ec);
-  --face-paper-hover: linear-gradient(to bottom, #f6f6f3, #e7e6e2);
-  --under-paper: #c4c3bd;
+  --face-brass: linear-gradient(to bottom, #665936, #594d2c);
+  --face-brass-hover: linear-gradient(to bottom, #574a2b, #4b4125);
+  --face-paper: linear-gradient(to bottom, #fffffb, #f4efdf);
+  --face-paper-hover: linear-gradient(to bottom, #f9f5e8, #ece5d0);
+  --under-paper: #cdc19c;
   /* The sheet that peeks out beneath a panel. */
-  --sheet-peek: #f0f0ec;
+  --sheet-peek: #f4efdf;
 
   /* The hackathon map's paper, water and rivers. */
-  --map-paper: #f7f7f4;
-  --map-water: #e3e4e1;
-  --map-river: #d2d3cf;
+  --map-paper: #fbf6e6;
+  --map-water: #e2e0c9;
+  --map-river: #cfcdb3;
 
   /* A panel is a sheet with two more sheets peeking out beneath it. */
   --shadow-panel:
@@ -128,7 +128,7 @@
 
 @layer base {
   /* --- Palettes ----------------------------------------------------------
-     The default (graphite, a neutral grey) lives in @theme above. Each block
+     The default (brass, the original yellow) lives in @theme above. Each block
      below swaps the same tokens; set one with <html data-palette="slate">.
      In dev, a switcher in the corner flips between them (see main.tsx). */
 
@@ -210,31 +210,31 @@
     --map-river: #d4cec6;
   }
 
-  /* Brass: the original yellow parchment and brass, for comparison. */
-  :root[data-palette='brass'] {
-    --color-surface: #fdfbf5;
-    --color-surface-sunk: #ded5b6;
-    --color-surface-raised: #f8f4e8;
-    --color-brass: #6a5b35;
-    --color-brass-deep: #594d2c;
-    --color-brass-darker: #4b4125;
-    --color-brass-soft: #b5a785;
-    --color-brass-pale: #f0e6c8;
-    --color-rule: #ded2b2;
-    --color-rule-soft: #e9e0c8;
-    --color-rule-strong: #cec4a2;
-    --edge-paper: #fffffb;
-    --edge-brass: #7f724e;
-    --under-brass: #322b19;
-    --face-brass: linear-gradient(to bottom, #665936, #594d2c);
-    --face-brass-hover: linear-gradient(to bottom, #574a2b, #4b4125);
-    --face-paper: linear-gradient(to bottom, #fffffb, #f4efdf);
-    --face-paper-hover: linear-gradient(to bottom, #f9f5e8, #ece5d0);
-    --under-paper: #cdc19c;
-    --sheet-peek: #f4efdf;
-    --map-paper: #fbf6e6;
-    --map-water: #e2e0c9;
-    --map-river: #cfcdb3;
+  /* Graphite: the neutral grey that used to be the default. */
+  :root[data-palette='graphite'] {
+    --color-surface: #fcfcfa;
+    --color-surface-sunk: #dddcd7;
+    --color-surface-raised: #f5f5f2;
+    --color-brass: #55554f;
+    --color-brass-deep: #474743;
+    --color-brass-darker: #3a3a37;
+    --color-brass-soft: #b9b8b3;
+    --color-brass-pale: #ecebe7;
+    --color-rule: #dcdbd5;
+    --color-rule-soft: #e8e7e3;
+    --color-rule-strong: #c9c8c2;
+    --edge-paper: #ffffff;
+    --edge-brass: #6a6a66;
+    --under-brass: #262624;
+    --face-brass: linear-gradient(to bottom, #545450, #474743);
+    --face-brass-hover: linear-gradient(to bottom, #474743, #3a3a37);
+    --face-paper: linear-gradient(to bottom, #ffffff, #f0f0ec);
+    --face-paper-hover: linear-gradient(to bottom, #f6f6f3, #e7e6e2);
+    --under-paper: #c4c3bd;
+    --sheet-peek: #f0f0ec;
+    --map-paper: #f7f7f4;
+    --map-water: #e3e4e1;
+    --map-river: #d2d3cf;
   }
 
   :root {

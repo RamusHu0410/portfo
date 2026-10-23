@@ -133,32 +133,26 @@ export default function IntroPage() {
 
       {/* --- Additional club leadership ------------------------------------- */}
       <Reveal as="section" aria-labelledby="clubs-heading" className="mt-10">
-        <Panel variant="sticky" className="px-7 py-6">
-          {/* Collapsed by default; the native <details> handles keyboard and screen readers. */}
-          <details className="group">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
-              <h2 id="clubs-heading" className="text-2xl">
-                Previous initiative and experience
-              </h2>
-              <span
-                aria-hidden="true"
-                className="text-brass-deep transition-transform duration-200 group-open:rotate-180"
-              >
-                ▾
-              </span>
-            </summary>
+        <Panel variant="clipping" className="px-7 py-6">
+          <h2 id="clubs-heading" className="text-2xl">
+            Additional club leadership
+          </h2>
 
-            <hr className="rule my-4" />
+          <hr className="rule my-4" />
 
+          {/* Two columns of three rows on wider screens to keep the block short. */}
+          <div className="grid gap-x-10 md:grid-cols-2">
             <Ledger>
               <LedgerRow label="Music Council" value="Choir Representative" />
               <LedgerRow label="EconBizChamp" value="Treasurer" />
               <LedgerRow label="French Club" value="Event Organizer, Treasurer, and Secretary" />
+            </Ledger>
+            <Ledger>
               <LedgerRow label="Chinese Chess Club" value="Event Organizer" />
               <LedgerRow label="Computer Programming Club" value="Former Host" />
               <LedgerRow label="Game Development Club" value="Event Organizer" />
             </Ledger>
-          </details>
+          </div>
         </Panel>
       </Reveal>
 

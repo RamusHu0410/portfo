@@ -8,26 +8,27 @@ import { useEffect, useState } from 'react'
  * switcher can be deleted.
  */
 const PALETTES = [
+  { id: 'brass', label: 'Brass', swatch: '#594d2c' },
   { id: 'graphite', label: 'Graphite', swatch: '#474743' },
   { id: 'slate', label: 'Slate', swatch: '#3e4754' },
   { id: 'sage', label: 'Sage', swatch: '#414c3d' },
   { id: 'stone', label: 'Stone', swatch: '#4d473f' },
-  { id: 'brass', label: 'Brass (old)', swatch: '#594d2c' },
 ] as const
 
 type PaletteId = (typeof PALETTES)[number]['id']
 
-const STORAGE_KEY = 'dev-palette'
+// New key so a palette saved under the old grey default does not stick.
+const STORAGE_KEY = 'dev-palette-v2'
 
 export default function PaletteSwitcher() {
   const [palette, setPalette] = useState<PaletteId>(
-    () => (localStorage.getItem(STORAGE_KEY) as PaletteId | null) ?? 'graphite',
+    () => (localStorage.getItem(STORAGE_KEY) as PaletteId | null) ?? 'brass',
   )
 
   useEffect(() => {
     const root = document.documentElement
-    // Graphite is the @theme default, so it needs no attribute.
-    if (palette === 'graphite') delete root.dataset.palette
+    // Brass is the @theme default, so it needs no attribute.
+    if (palette === 'brass') delete root.dataset.palette
     else root.dataset.palette = palette
     localStorage.setItem(STORAGE_KEY, palette)
   }, [palette])

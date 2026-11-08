@@ -79,4 +79,14 @@ export const SITES: Site[] = [
     logo: '/logos/virtual.svg',
     nudge: [32, -25],
   },
+  {
+    id: 'trentu',
+    name: 'Trent University',
+    city: 'Peterborough',
+    lon: -78.379,
+    lat: 44.304,
+    hackathon: 'HackTrent',
+    logo: '/logos/trentu.png',
+    result: 'Mentor',
+  },
 ]
